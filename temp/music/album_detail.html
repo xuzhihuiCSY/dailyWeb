@@ -1,0 +1,33 @@
+<!-- album_detail.html -->
+<!-- Path: temp\album_detail.html -->
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+<div>
+<!--display the album cover as A_cover first-->
+<img src="{{ album.A_cover.url }}" alt="Album Cover" width="200" height="200">
+
+<!--display the album title-->
+<h1>{{ album.album_title }}</h1>
+
+<!--display the artist name-->
+<h2>{{ album.artist }}</h2>
+
+<!--display the songs-->
+{% for song in songs %}
+  <li>{{ song.title }} by {{ song.artist }}</li>
+{% endfor %}
+
+<a href="{% url 'music_index' %}">back</a>
+
+</div>
+
+{% endblock content %}

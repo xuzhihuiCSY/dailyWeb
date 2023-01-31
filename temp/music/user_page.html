@@ -1,0 +1,42 @@
+<!--welcome to the user-->
+<h1>Welcome {{ user.username }}</h1>
+<!--display the songs in Like-->
+<h3>Songs Liked</h3>
+{% if likes.all %}
+    <ul>
+        {% for like in likes.all %}
+            <li>{{ like.Song }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No liked songs</p>
+{% endif %}
+
+<!--display album title and song title-->
+<!--if no show no created album or no uploaded songs-->
+
+
+<h3>Album Created</h3>
+{% if albums.all %}
+    <ul>
+        {% for album in  albums %}
+      <li>{{ album.album_title }} by {{ album.artist }}      <a href="{% url 'album_edit' album.id %}">edit</a>    <a href="{% url 'album_delete' album.id %}">delete</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No albums found</p>
+{% endif %}
+
+
+<h3>Songs Uploaded</h3>
+{% if songs.all %}
+    <ul>
+        {% for song in songs.all %}
+            <li>{{ song.title }}    <a href="{% url 'song_edit' song.id %}">edit</a>   <a href="{% url 'song_delete' song.id %}">delete</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No uploaded songs</p>
+{% endif %}
+
+<a href="{% url 'music_index' %}">back</a>

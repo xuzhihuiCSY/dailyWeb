@@ -1,0 +1,38 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+<div>
+<!--song title-->
+<h1>{{ song.title }}</h1>
+
+<!--song artist-->
+<h2>{{ song.artist }}</h2>
+
+<!--play the song-->
+<audio controls>
+  <source src="{{ song.file.url }}" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<form action="{% url 'song_detail' song.id %}" method="post">
+  {% csrf_token %}
+  {% if is_liked %}
+    <input type="submit" value="Unlike">
+  {% else %}
+    <input type="submit" value="Like">
+  {% endif %}
+</form>
+
+<a href="{% url 'music_index' %}">back</a>
+
+</div>
+
+{% endblock content %}

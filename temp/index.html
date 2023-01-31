@@ -1,0 +1,45 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+    <section class="main swiper mySwiper">
+        <div class="wrapper swiper-wrapper">
+          <div class="slide swiper-slide">
+            <img src="{% static 'index_front_page/img1.jpg' %}" alt="" class="image" />
+            <div class="image-data">
+              <span class="text">World fresh News</span>
+              <h2>
+                Control the dynamics of the world<br />
+                Made with love
+              </h2>
+              <a href="#" class="button">read</a>
+            </div>
+          </div>
+          <div class="slide swiper-slide">
+            <img src="{% static 'index_front_page/img2.jpg' %}" alt="" class="image" />
+            <div class="image-data">
+              <span class="text">Music is on its way</span>
+              <h2>
+                Sit down and lay back <br />
+                Enjoy the music
+              </h2>
+              <a href="{% url 'music_index' %}" class="button">music</a>
+            </div>
+          </div>
+          <div class="slide swiper-slide">
+            <img src="{% static 'index_front_page/img3.jpg' %}" alt="" class="image" />
+            <div class="image-data">
+              <span class="text">Movies, TV shows, Anime</span>
+              <h2>
+                we always have something<br />
+                you like to watch
+              </h2>
+              <a href="#" class="button">watch</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="swiper-button-next nav-btn"></div>
+        <div class="swiper-button-prev nav-btn"></div>
+        <div class="swiper-pagination"></div>
+      </section>
+{% endblock content %}

@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'swiper-bundle.min.css' %}" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'index_front_page/Hstyle.css' %}" />
+        
+    <!-- ===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+<title>Daliy Web</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-bar">
+            <i class='bx bx-menu sidebarOpen' ></i>
+            <span class="logo navLogo"><a href="{% url 'index' %}">Home Page</a></span>
+
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a href="{% url 'index' %}">Daliy WebSiTe</a></span>
+                    <i class='bx bx-x siderbarClose'></i>
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'music_index' %}">Music</a></li>
+                    <li><a href="#">Video</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">More</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <i class='bx bx-moon moon'></i>
+                    <i class='bx bx-sun sun'></i>
+                </div>
+
+                <div class="user">
+                        <a href="{% url 'logout' %}">Logout</a>
+                </div>
+
+                <div class="searchBox">
+                   <div class="searchToggle">
+                    <i class='bx bx-x cancel'></i>
+                    <i class='bx bx-search search'></i>
+                   </div>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search...">
+                        <i class='bx bx-search'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- user html code put here -->
+    <style>
+        .S1{
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .TXT1{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color:var(--nav-color);
+        }
+        .logout{
+            color: var(--nav-color);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: 1px solid var(--nav-color);
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: 0.5s;
+        }
+
+    </style>
+    <section class="S1">
+        <div class="TXT1">
+            <h1>Welcome {{ user.username }}</h1>
+            <!--display the songs in Like-->
+            <h3>Songs Liked</h3>
+            {% if likes.all %}
+                <ul>
+                    {% for like in likes.all %}
+                        <li>{{ like.Song }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No liked songs</p>
+            {% endif %}
+
+            <!--display album title and song title-->
+            <!--if no show no created album or no uploaded songs-->
+
+
+            <h3>Album Created</h3>
+            {% if albums.all %}
+                <ul>
+                    {% for album in  albums %}
+                <li>{{ album.album_title }} by {{ album.artist }}      <a href="{% url 'album_edit' album.id %}">edit</a>    <a href="{% url 'album_delete' album.id %}">delete</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No albums found</p>
+            {% endif %}
+
+
+            <h3>Songs Uploaded</h3>
+            {% if songs.all %}
+                <ul>
+                    {% for song in songs.all %}
+                        <li>{{ song.title }}    <a href="{% url 'song_edit' song.id %}">edit</a>   <a href="{% url 'song_delete' song.id %}">delete</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No uploaded songs</p>
+            {% endif %}
+
+            <a class= "logout"href="{% url 'logout' %}">Logout</a>
+        </div>
+    </section>
+      <!-- Swiper JS -->
+      <script src="{% static 'swiper-bundle.min.js' %}"></script>
+  
+      <!-- Initialize Swiper -->
+      <script>
+        var swiper = new Swiper(".mySwiper", {
+          slidesPerView: 1,
+          loop: true,
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        });
+      </script>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

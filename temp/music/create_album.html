@@ -1,0 +1,22 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+<div>
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Create Album</button>
+    </form>
+    <a href="{% url 'music_index' %}">Cancel</a>
+
+</div>
+
+{% endblock content %}
