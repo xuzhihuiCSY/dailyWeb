@@ -1,0 +1,50 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<!--this is video detail page-->
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div>
+<h2>{{ video.title }}</h2>
+<a href="{% url 'video_index' %}">back</a>
+<p>Episode Number: {{ video.episode_number }}</p>
+
+<video width="400" controls>
+    <source src="{{ video.file.url }}" type="video/mp4">
+    Your browser does not support HTML video.
+  </video>
+
+<div class="same-episode-videos">
+    <h3>Videos under the same episode:</h3>
+    {% for v in videos_in_same_episode %}
+      <div class="video">
+        <h4><a href="{% url 'video_detail' v.id %}">{{ v.title }}</a></h4>
+      </div>
+    {% endfor %}
+  </div>
+
+<h3>Video Comments</h3>
+<div class="comments">
+    {% for comment in comments %}
+        <div class="comment">
+            <p>{{ comment.comment }}</p>
+            <p>Comment by: {{ comment.user }}</p>
+            <p>=================================================</p>
+        </div>
+    {% endfor %}
+</div>
+
+<h3>Add a Comment</h3>
+<form action="{% url 'video_detail' video.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+</div>
+{% endblock content %}

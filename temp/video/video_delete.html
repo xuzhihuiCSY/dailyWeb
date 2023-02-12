@@ -1,0 +1,21 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<!--confirm delete -->
+<style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+<div>
+<h1>Are you sure to delete {{video.title}}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Confirm">
+</form>
+<a href="{% url 'video_index' %}">Cancel</a>
+</div>
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+<div>
+<!-- display episode cover -->
+<div class="episode-cover">
+    <img src="{{ episode.cover.url }}" alt="{{ episode.title }}"width="200" height="200">
+</div>
+
+<!-- display episode title -->
+<h1 class="episode-title">{{ episode.title }}</h1>
+<a href="{% url 'video_index' %}">back</a>
+<!-- display episode description -->
+<div class="episode-description">
+    {{ episode.description }}
+</div>
+
+<!-- display the videos under episode -->
+<div class="episode-videos">
+    {% for video in videos %}
+        <h4>{{ video.title }}
+            <a href="{% url 'video_detail' video.id %}">watch</a>
+        </h4>
+    {% endfor %}
+</div>
+
+<!-- upload video-->
+<a href="{% url 'upload_video' episode.id %}">upload video</a>
+
+</div>
+{% endblock content %}

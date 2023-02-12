@@ -1,0 +1,20 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+<a href="{% url 'video_index' %}">Cancel</a>
+</div>
+{% endblock content %}

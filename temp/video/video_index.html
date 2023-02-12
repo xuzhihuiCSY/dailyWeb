@@ -1,0 +1,69 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+<div>
+<h1 style="display:inline;">Video Index</h1>
+
+<!-- search bar -->
+<form action="/search" method="get">
+    <input type="text" name="q" placeholder="Search">
+    <button type="submit">Search</button>
+</form>
+<!-- display the newest 5 Episodes -->
+<h2>Newest Episodes</h2>
+<ul>
+    {% for episode in episodes %}
+        {% if forloop.counter <= 5 %}
+            <li><a href="{% url 'episode_detail' episode.id %}">{{ episode.title }}</a></li>
+            <li><img src="{{ episode.cover.url }}" alt="{{ episode.title }} cover" width="200" height="200"></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+<!-- Anime Episode, only display first 5 -->
+<h3>Anime:</h3>
+<ul>
+    {% for episode in episodes %}
+    {% if episode.category == 'Anime' %}
+        <li>{{ episode.title }}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<!-- Movie Episode, only display first 5 -->
+<h3>Movies:</h3>
+<ul>
+    {% for episode in episodes %}
+    {% if episode.category == 'Movies' %}
+        <li>{{ episode.title }}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<!-- TV Series Episode, only display first 5 -->
+<h3>TV Series:</h3>
+<ul>
+    {% for episode in episodes %}
+    {% if episode.category == 'TV Series' %}
+        <li>{{ episode.title }}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<!-- Documentaries Episode, only display first 5 -->
+<h3>Documentaries:</h3>
+<ul>
+    {% for episode in episodes %}
+    {% if episode.category == 'Documentaries' %}
+        <li>{{ episode.title }}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<a href="{% url 'create_episode' %}">create New episode</a>
+</div>
+{% endblock content %}
