@@ -13,10 +13,11 @@
 <h1 style="display:inline;">Video Index</h1>
 
 <!-- search bar -->
-<form action="/search" method="get">
+<form method="get">
     <input type="text" name="q" placeholder="Search">
     <button type="submit">Search</button>
-</form>
+</form> 
+
 <!-- display the newest 5 Episodes -->
 <h2>Newest Episodes</h2>
 <ul>
@@ -63,7 +64,8 @@
     {% endif %}
     {% endfor %}
 </ul>
-
+{% if user.is_authenticated %}
 <a href="{% url 'create_episode' %}">create New episode</a>
+{% endif %}
 </div>
 {% endblock content %}
