@@ -140,6 +140,28 @@
                 <p>No uploaded songs</p>
             {% endif %}
 
+            <h3>epsiode created</h3>
+            {% if episodes.all %}
+                <ul>
+                    {% for episode in episodes.all %}
+                        <li>{{ episode.title }}    <a href="{% url 'episode_edit' episode.id %}">edit</a>   <a href="{% url 'episode_delete' episode.id %}">delete</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No created episodes</p>
+            {% endif %}
+
+            <h3>video uploaded</h3>
+            {% if videos.all %}
+                <ul>
+                    {% for video in videos.all %}
+                        <li>{{ video.title }}    <a href="{% url 'video_edit' video.id %}">edit</a>   <a href="{% url 'video_delete' video.id %}">delete</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No uploaded videos</p>
+            {% endif %}
+
             <a class= "logout"href="{% url 'logout' %}">Logout</a>
         </div>
     </section>
