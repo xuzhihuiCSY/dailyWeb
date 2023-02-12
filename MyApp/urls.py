@@ -26,5 +26,20 @@ urlpatterns = [
     path('album_edit/<int:album_id>', views.album_edit, name='album_edit'),
     # album_delete
     path('album_delete/<int:album_id>', views.album_delete, name='album_delete'),
+
+    path('video_index', views.video_index, name='video_index'),
+    path('create_episode', views.create_episode, name='create_episode'),
+    path('episode_detail/<int:episode_id>', views.episode_detail, name='episode_detail'),
+    path('upload_video/<int:episode_id>', views.upload_video, name='upload_video'),
+    path('video_detail/<int:video_id>', views.video_detail, name='video_detail'),
+    #video edit
+    path('video_edit/<int:video_id>', views.video_edit, name='video_edit'),
+    #video delete
+    path('video_delete/<int:video_id>', views.video_delete, name='video_delete'),
+    #episode edit
+    path('episode_edit/<int:episode_id>', views.episode_edit, name='episode_edit'),
+    #episode delete
+    path('episode_delete/<int:episode_id>', views.episode_delete, name='episode_delete'),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
