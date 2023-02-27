@@ -12,7 +12,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'index_front_page/Hstyle.css' %}" />
-        
+    
     <!-- ===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 <title>Daliy Web</title>
@@ -32,8 +32,8 @@
                 <ul class="nav-links">
                     <li><a href="{% url 'index' %}">Home</a></li>
                     <li><a href="{% url 'music_index' %}">Music</a></li>
-                    <li><a href="#">Video</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="{% url 'video_index' %}">Video</a></li>
+                    <li><a href="{% url 'news_page' %}">News</a></li>
                     <li><a href="#">More</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
@@ -58,9 +58,9 @@
                     <i class='bx bx-x cancel'></i>
                     <i class='bx bx-search search'></i>
                    </div>
-
+                   
                     <div class="search-field">
-                        <input type="text" placeholder="Search...">
+                        <input type="text" name="q"placeholder="Search...">
                         <i class='bx bx-search'></i>
                     </div>
                 </div>

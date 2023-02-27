@@ -31,9 +31,9 @@
         </h4>
     {% endfor %}
 </div>
-
+{% if user.is_authenticated %}
 <!-- upload video-->
 <a href="{% url 'upload_video' episode.id %}">upload video</a>
-
+{% endif %}
 </div>
 {% endblock content %}

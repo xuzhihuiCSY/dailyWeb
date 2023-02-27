@@ -4,50 +4,174 @@
 
 <style>
   body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: whitesmoke;
+    overflow-x: hidden;
   }
+  .spotify-playlists {
+    padding: 20px 40px;
+    border-bottom: 5px solid var(--nav-color);
+  }
+  .spotify-playlists h1 {
+    color: var(--nav-color);
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+  .spotify-playlists h2 {
+    color: var(--nav-color);
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .spotify-playlists .list {
+    display: flex;
+    gap: 20px;
+    animation: animate 10s linear infinite;
+    animation-direction: forwards;
+  }
+
+  .spotify-playlists .list:hover {
+  animation-play-state: paused;
+}
+
+  .spotify-playlists .list .item {
+    min-width: 140px;
+    width: 160px;
+    padding: 15px;
+    background-color: #181818;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all ease 0.4s;
+
+  }
+
+@keyframes animate {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .spotify-playlists .list .item:hover {
+    background-color: #252525;
+  }
+
+  .spotify-playlists .list .item img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .spotify-playlists .list .item .play {
+    position: relative;
+  }
+
+  .spotify-playlists .list .item .play .fa {
+    position: absolute;
+    right: 10px;
+    top: -60px;
+    padding: 18px;
+    background-color: #1db954;
+    border-radius: 100%;
+    opacity: 0;
+    transition: all ease 0.4s;
+  }
+
+  .spotify-playlists .list .item:hover .play .fa {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+
+  .spotify-playlists .list .item h4 {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .spotify-playlists .list .item p {
+    color: #989898;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  .spotify-playlists hr {
+    margin: 70px 0px 0px;
+    border-color: #636363;
+  }
+
+  
 </style>
-<div>
-<h1>Music Library</h1>
+<div style="position: relative;top:70px;">
+<div class="spotify-playlists">
+  <h1>Music Library</h1>
+  <form method="get">
+    <input type="text" name="q" placeholder="Search Albums and Songs">
+    <button type="submit">Search</button>
+  </form>
 
-<form method="get">
-  <input type="text" name="q" placeholder="Search Albums and Songs">
-  <button type="submit">Search</button>
-</form>
-
-<h2 style="display:inline;">Albums</h2>
-{% if user.is_authenticated %}
-  <a style="display:inline;" href="create_album">create an Albums</a>
-{% endif %}
-{% if albums %}
-  <ul>
-    {% for album in albums %}
-      <li><a href="album_detail/{{ album.id }}"> {{album.album_title }} by {{ album.artist }}</a></li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No albums found</p>
-{% endif %}
-
-<div>
-    <h2 style="display:inline;">Songs</h2>
-    {% if user.is_authenticated %}
-      <a style="display:inline;" href="upload">upload songs</a>
-    {% endif %}
-</div>
-
-{% if songs %}
-  <ul>
-    {% for song in songs %}
-        <li><a href="song_detail/{{song.id}}"> {{ song.title }} by {{ song.artist }}</a></li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No songs found</p>
-{% endif %}
 
 </div>
 
+<div class="spotify-playlists">
+  <h2 style="display:inline;">Albums</h2>
+  {% if user.is_authenticated %}
+    <a style="display:inline; text-decoration: none;" href="create_album">create an Albums</a>
+  {% endif %}
+  <div class="list">
+  {% if albums %}
+  {% for album in albums %}
+          <div class="item">
+            <a href="album_detail/{{ album.id }}" style="text-decoration: none">
+              <img src="{{ album.A_cover.url }}" />
+              <div class="play">
+                  <span class="fa fa-play"></span>
+              </div>
+              <h4>{{album.album_title }}</h4>
+              <p>{{album.album_title }} is presented by {{ album.artist }}</p>
+            </a>
+          </div>
+        <!-- <a href="album_detail/{{ album.id }}"> {{album.album_title }} by {{ album.artist }}</a></li> -->
+      {% endfor %}
+  {% else %}
+    <p>No albums found</p>
+  {% endif %}
+  </div>
+</div>
+
+<div class="spotify-playlists">
+  <h2 style="display:inline;">Songs</h2>
+  {% if user.is_authenticated %}
+    <a style="display:inline; text-decoration: none;" href="upload">upload songs</a>
+  {% endif %}
+  <div class="list">
+  {% if songs %}
+  {% for song in songs %}
+    <div class="item">
+      <a href="song_detail/{{ song.id }}" style="text-decoration: none">
+        <img src="{{ song.cover.url }}" />
+        <div class="play">
+          <span class="fa fa-play"></span>
+        </div>
+        <h4>{{song.title }}</h4>
+        <p>{{song.title }} is presented by {{ song.artist }}</p>
+      </a>
+    </div>
+  
+    {% endfor %}
+
+  {% else %}
+    <p>No songs found</p>
+  {% endif %}
+  </div>
+</div>
+
+<div style="text-align: center;"><p>made with love</p></div>
+
+</div>
+<script src="https://kit.fontawesome.com/23cecef777.js" crossorigin="anonymous"></script>
 {% endblock content %}
