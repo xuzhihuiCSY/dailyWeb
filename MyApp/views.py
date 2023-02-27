@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Album, Song,Like,Episode, Video, VideoComment
 from .forms import SongForm,AlbumForm,EpisodeForm, VideoForm, VideoCommentForm
 from django.contrib.auth.models import User
+from newsapi import NewsApiClient
 
 import json
 import urllib.request
@@ -180,11 +181,7 @@ def video_index(request):
     else:
         episodes = Episode.objects.all()
         videos = Video.objects.all()
-    context = {
-        'episodes': episodes,
-        'videos': videos,
-    }
-    return render(request, 'video/video_index.html', context)
+    return render(request, 'video/video_index.html', {'episodes':episodes,'videos':videos})
 
 def create_episode(request):
     if request.method == 'POST':
@@ -286,3 +283,32 @@ def user(request, user_id):
     episodes = Episode.objects.filter(uploader=user)
     videos = Video.objects.filter(uploader=user)
     return render(request, 'user.html', {'user': user, 'albums': albums, 'songs': songs, 'likes': likes, 'episodes': episodes, 'videos': videos})
+
+def news_page(request):
+    newsapi = NewsApiClient(api_key='6a8d8580dafd470f84f941c96205627e')
+    top_headlines = newsapi.get_top_headlines(sources='bbc-news,the-verge')
+    articles = top_headlines['articles']
+    desc = []
+    news = []
+    img = []
+    for i in range(len(articles)):
+        myarticles = articles[i]
+        news.append(myarticles['title'])
+        desc.append(myarticles['description'])
+        img.append(myarticles['urlToImage'])
+    mylist = zip(news, desc, img)
+    return render(request, 'news/news.html', context={"mylist":mylist})
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        albums = Album.objects.filter(title__icontains=query)
+        songs = Song.objects.filter(title__icontains=query)
+        episodes = Episode.objects.filter(title__icontains=query)
+        videos = Video.objects.filter(title__icontains=query)
+    else:
+        albums = Album.objects.all()
+        songs = Song.objects.all()
+        episodes = Episode.objects.all()
+        videos = Video.objects.all()
+    return render(request, 'search.html', {'albums': albums, 'songs': songs, 'episodes': episodes, 'videos': videos})

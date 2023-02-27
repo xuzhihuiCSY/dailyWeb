@@ -41,5 +41,7 @@ urlpatterns = [
     #episode delete
     path('episode_delete/<int:episode_id>', views.episode_delete, name='episode_delete'),
 
+    #news page
+    path('news_page',views.news_page,name='news_page'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
