@@ -1,7 +1,65 @@
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.4s ease;
+    ;
+}
+
+/* Style for news container */
+.news {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+
+/* Style for news image */
+.news-img img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Style for news description */
+.news-des {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.news-des h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.news-des h3 {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #666;
+}
+
+.news-des p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 10px 0 0 0;
+    color: #555;
+}
+</style>
 <h1>news part</h1>
 {% for news, des, img in mylist %}
     <div class="news">
