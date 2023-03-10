@@ -2,20 +2,13 @@
 {% load static %}
 {% block content %}
 
-<style>
-  body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
-<div>
+<link rel="stylesheet" href="{% static 'Music_edit_style.css' %}">
+<div class="post_field">
 <h2>upload songs</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-
-  <input type="submit" value="Upload">
+  <button type="submit">Upload</button>
 </form>
 <a href="{% url 'music_index' %}">Cancel</a>
 

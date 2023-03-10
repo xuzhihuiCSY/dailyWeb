@@ -2,14 +2,8 @@
 {% load static %}
 {% block content %}
 
-<style>
-  body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
-<div>
+<link rel="stylesheet" href="{% static 'Music_edit_style.css' %}">
+<div class="post_field">
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

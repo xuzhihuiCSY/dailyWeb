@@ -2,19 +2,13 @@
 {% load static %}
 {% block content %}
 
-<style>
-  body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
-<div>
+<link rel="stylesheet" href="{% static 'Music_edit_style.css' %}">
+<div class="post_field">
 <!--confirm delete then go to music_index-->
 <h1>Are you sure you want to delete {{ song.title }} by {{ song.artist }}?</h1>
 <form method="post">
     {% csrf_token %}
-    <input type="submit" value="Confirm">
+    <button type="submit">Confirm</button>
 </form>
 <a href="{% url 'music_index' %}">Cancel</a>
 
