@@ -28,3 +28,9 @@ class SongForm(forms.ModelForm):
     class Meta:
         model = Song
         fields = ['title', 'artist', 'file', 'cover', 'albums']
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField(widget=forms.Textarea)

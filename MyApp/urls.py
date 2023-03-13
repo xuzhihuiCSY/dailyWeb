@@ -43,5 +43,12 @@ urlpatterns = [
 
     #news page
     path('news_page',views.news_page,name='news_page'),
+
+    #more list
+    path('more_list',views.more_list,name='more_list'),
+
+    #contact
+    path('contact/', views.contact, name='contact'),
+    
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

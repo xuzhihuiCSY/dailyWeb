@@ -8,9 +8,22 @@ from .models import Album, Song,Like,Episode, Video, VideoComment
 from .forms import SongForm,AlbumForm,EpisodeForm, VideoForm, VideoCommentForm
 from django.contrib.auth.models import User
 from newsapi import NewsApiClient
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import ContactForm
 
 import json
 import urllib.request
+
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
+from django.urls import reverse_lazy
+
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('login'))
+def more_list(request):
+    if not request.user.is_authenticated:
+        messages.info(request, 'Please log in to use this feature.')
+    return render(request, 'more/more_list.html')
 
 # Create your views here.
 
@@ -285,9 +298,15 @@ def user(request, user_id):
     return render(request, 'user.html', {'user': user, 'albums': albums, 'songs': songs, 'likes': likes, 'episodes': episodes, 'videos': videos})
 
 def news_page(request):
-    newsapi = NewsApiClient(api_key='6a8d8580dafd470f84f941c96205627e')
-    top_headlines = newsapi.get_top_headlines(sources='bbc-news,the-verge')
-    articles = top_headlines['articles']
+    if 'query' in request.GET:
+        query = request.GET['query']
+        newsapi = NewsApiClient(api_key='6a8d8580dafd470f84f941c96205627e')
+        all_articles = newsapi.get_everything(q=query, sources='bbc-news,the-verge')
+        articles = all_articles['articles']
+    else:
+        newsapi = NewsApiClient(api_key='6a8d8580dafd470f84f941c96205627e')
+        top_headlines = newsapi.get_top_headlines(sources='bbc-news,the-verge')
+        articles = top_headlines['articles']
     desc = []
     news = []
     img = []
@@ -299,16 +318,22 @@ def news_page(request):
     mylist = zip(news, desc, img)
     return render(request, 'news/news.html', context={"mylist":mylist})
 
-def search(request):
-    query = request.GET.get('q')
-    if query:
-        albums = Album.objects.filter(title__icontains=query)
-        songs = Song.objects.filter(title__icontains=query)
-        episodes = Episode.objects.filter(title__icontains=query)
-        videos = Video.objects.filter(title__icontains=query)
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            send_mail(
+                f"{subject} from {name} ({email})",
+                message,
+                email,
+                [settings.DEFAULT_FROM_EMAIL],
+            )
+            # go back to index page
+            return redirect('index')
     else:
-        albums = Album.objects.all()
-        songs = Song.objects.all()
-        episodes = Episode.objects.all()
-        videos = Video.objects.all()
-    return render(request, 'search.html', {'albums': albums, 'songs': songs, 'episodes': episodes, 'videos': videos})
+        form = ContactForm()
+    return render(request, 'contact.html', {'form': form})

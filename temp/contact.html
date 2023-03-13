@@ -1,0 +1,125 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'contact.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+<section>
+        <div class="card">
+            <div class="user">
+                <div class="imgBx">
+                    <img src="{% static 'images/user.jpg' %}">
+                </div>
+                <div class="content">
+                    <h2>Xu Zhihui<br>
+                    <span>Web Developer</span>
+                    </h2>
+                </div>
+                <span id="Btn1"class="right-span"><i class="fa-solid fa-forward"></i></span>
+                <span class="toggle"></span>
+            </div>
+            <ul class="contact">
+                <li style="--clr:#c71610;--i:0;">
+                    <a href="#">
+                        <div class="iconBx">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <p>xuzhihuieateat@gmail.com</p>
+                    </a></li>
+                <li style="--clr:#171515;--i:1;"><a href="#">
+                    <div class="iconBx">
+                        <i class="fa-brands fa-github"></i>
+                    </div>
+                    <p>github.com/xuzhihuiCSY</p>
+                </a></li>
+                <li style="--clr:#0a66c2;--i:2;"><a href="#">
+                    <div class="iconBx">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+                    <p>https://www.linkedin.com/in/<br>zhihui-xu-27ba65258/</p>
+                </a></li>
+            </ul>
+        </div>
+    
+        <div class="card" style="display: none;">
+            <div class="user">
+                <div class="imgBx">
+                    <img src="{% static 'images/user.jpg' %}">
+                </div>
+                <div class="content">
+                    <h2>khang tran<br>
+                    <span>UI Designer</span>
+                </h2>
+                </div>
+                <span id="Btn0"class="left-span"><i class="fa-solid fa-backward"></i></span>
+                <span class="toggle"></span>
+            </div>
+            <ul class="contact">
+                <li style="--clr:#c71610;--i:0;">
+                    <a href="#">
+                        <div class="iconBx">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <p>khangtran025978@gmail.com</p>
+                    </a></li>
+                <li style="--clr:#171515;--i:1;"><a href="#">
+                    <div class="iconBx">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <p>Phone#: (657)238-7615</p>
+                </a></li>
+                <li style="--clr:#0a66c2;--i:2;"><a href="#">
+                    <div class="iconBx">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+                    <p>https://www.linkedin.com/in/<br>khang-d-tran/</p>
+                </a></li>
+            </ul>
+        </div>
+        <script>
+            let toggle = document.querySelectorAll('.toggle');
+            let cards = document.querySelectorAll('.card');
+            let Btn1 = document.getElementById('Btn1');
+            let Btn0 = document.getElementById('Btn0');
+            
+            cards[1].style.display = 'none'; // hide the second card initially
+            // Btn0.style.display = 'none';
+    
+            Btn1.onclick = function() {
+                cards[0].style.display = 'none' 
+                cards[1].style.display = 'block'; // show the second card
+                // Btn0.style.display = 'block';
+                // Btn1.style.display = 'none';
+            }
+            Btn0.onclick = function() {
+                cards[0].style.display = 'block' 
+                cards[1].style.display = 'none'; // show the second card
+                // Btn0.style.display = 'none';
+                // Btn1.style.display = 'block';
+            }
+    
+            for (let i = 0; i < toggle.length; i++) {
+                toggle[i].onclick = function() {
+                    cards[i].classList.toggle('active');
+                }
+            }
+        </script>
+</section>
+
+<link rel="stylesheet" href="{% static 'Music_edit_style.css' %}">
+<section>
+<div style="width: 200px; height: 80px;"></div>
+<div class="post_field">
+    <h1>Contact Us</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</section>
+</body>
+{% endblock content %}
