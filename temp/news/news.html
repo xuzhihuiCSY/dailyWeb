@@ -15,7 +15,7 @@
 
 /* Style for news container */
 .news {
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -38,7 +38,6 @@
 /* Style for news description */
 .news-des {
     flex: 1;
-    margin-left: 20px;
 }
 
 .news-des h2 {
@@ -56,22 +55,69 @@
 .news-des p {
     font-size: 16px;
     line-height: 1.5;
-    margin: 10px 0 0 0;
     color: #555;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  input[type="text"],
+  input[type="file"],
+  textarea {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  button[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: var(--nav-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
 </style>
-<h1>news part</h1>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div style="width: 100px;
+height: 80px;">
+</div>
+<form method="get">
+    <input type="text" name="query" placeholder="Search news...">
+    <button type="submit">Search</button>
+</form>
 {% for news, des, img in mylist %}
     <div class="news">
-        <div class="news-img">
-            <img src="{{ img }}" alt="news-img" width="400" height="250">
-        </div>
-        <div class="news-des">
-            <h2>{{ news }}</h2>
-            <h3>Description:</h3>
-            <p>{{ des }}</p>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="news-img">
+                <img src="{{ img }}" alt="news-img" width="400" height="250"></div>
+            </div>
+            <div class="col-sm-5">
+                <div class="news-des">
+                    <h2>{{ news }}</h2>
+                    <h3>Description:</h3>
+                    <p>{{ des }}</p>
+            </div></div>
         </div>
     </div>
 {% endfor %}
 
 {% endblock %}
+

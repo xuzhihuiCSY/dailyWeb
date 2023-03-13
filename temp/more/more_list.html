@@ -1,0 +1,45 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'more_list.css' %}">
+
+<div style="width: 100px;
+height: 80px;">
+</div>
+
+<div class="row">
+    <div class="column">
+      <div class="card">
+        <h3>Blog</h3>
+        <p>where you can </p>
+        <p>ask question or show off</p>
+      </div>
+    </div>
+  
+    <div class="column">
+      <div class="card">
+        <h3>Weather</h3>
+        <p>Check the Weather</p>
+        <p>convenient travel and life</p>
+      </div>
+    </div>
+    
+    <div class="column">
+      <div class="card">
+        <h3>To-do-list</h3>
+        <p>To Do gives you focus</p>
+        <p>from work to play, balance your life</p>
+      </div>
+    </div>
+    
+    <div class="column">
+      <div class="card">
+        <h3>Card 4</h3>
+        <p>Some text</p>
+        <p>Some text</p>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
