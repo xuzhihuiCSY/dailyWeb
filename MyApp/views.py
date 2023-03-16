@@ -12,8 +12,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 
+
 import json
 import urllib.request
+from urllib.error import HTTPError
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
@@ -337,3 +339,56 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form': form})
+
+def weather(request):
+    if request.method == 'POST':
+        city = request.POST['city']
+        try:
+            res = urllib.request.urlopen('http://api.openweathermap.org/data/2.5/weather?q='+city+'&appid=cb771e45ac79a4e8e2205c0ce66ff633').read()
+            json_data = json.loads(res)
+        except HTTPError as e:
+            if e.code == 404:
+                data = {'city_not_found': True}
+                return render(request, 'more/weather.html', {'city': city, 'data': data})
+            else:
+                raise e
+        else:
+            temp_k = float(json_data['main']['temp'])
+            temp_c = round(temp_k - 273.15, 2)
+            data = {
+                "country_code": str(json_data['sys']['country']),
+                "coordinate": str(json_data['coord']['lon']) + ' ' + str(json_data['coord']['lat']),
+                "temp": str(temp_c) + ' °C',
+                "pressure": str(json_data['main']['pressure'])+' hPa',
+                "humidity": str(json_data['main']['humidity']),
+                "weather": str(json_data['weather'][0]['main']),
+                "weather_icon": get_weather_icon(json_data['weather'][0]['main']),
+                "id": str(json_data['weather'][0]['id']),
+                "feels_like": str(round(float(json_data['main']['feels_like']) - 273.15, 2))+' °C',
+                "cod": str(json_data['cod']),
+            }
+    else:
+        city = ''
+        data = {}
+    return render(request, 'more/weather.html', {'city': city, 'data': data})
+
+def get_weather_icon(weather):
+    if weather == 'Clear':
+        return '<i class="fas fa-sun"></i>'
+    elif weather == 'Few clouds':
+        return '<i class="fas fa-cloud-sun"></i>'
+    elif weather == 'Clouds' or weather == 'Broken clouds':
+        return '<i class="fas fa-cloud"></i>'
+    elif weather == 'Shower rain':
+        return '<i class="fas fa-cloud-showers-heavy"></i>'
+    elif weather == 'Rain':
+        return '<i class="fas fa-cloud-rain"></i>'
+    elif weather == 'Thunderstorm':
+        return '<i class="fas fa-bolt"></i>'
+    elif weather == 'Snow':
+        return '<i class="fas fa-snowflake"></i>'
+    elif weather == 'Mist':
+        return '<i class="fas fa-smog"></i>'
+    else:
+        return ''
+
