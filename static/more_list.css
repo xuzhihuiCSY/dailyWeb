@@ -11,6 +11,7 @@
     float: left;
     width: 25%;
     padding: 10px;
+    cursor: pointer;
   }
   
   /* Remove extra left and right margins, due to padding */
@@ -21,6 +22,7 @@
     content: "";
     display: table;
     clear: both;
+    cursor: pointer;
   }
   
   /* Responsive columns */
@@ -29,6 +31,7 @@
       width: 100%;
       display: block;
       margin-bottom: 20px;
+      cursor: pointer;
     }
   }
   
@@ -38,6 +41,7 @@
     padding: 16px;
     text-align: center;
     background-color: var(--text-color);
+    cursor: pointer;
   }
 
   ::-webkit-scrollbar { 
@@ -45,5 +49,6 @@
 }
 
   p{
-    color: gray
+    color: gray;
+    cursor: pointer;
   }
