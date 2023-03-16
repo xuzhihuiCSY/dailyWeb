@@ -49,6 +49,9 @@ urlpatterns = [
 
     #contact
     path('contact/', views.contact, name='contact'),
+
+    #weather
+    path('weather/', views.weather, name='weather'),
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
