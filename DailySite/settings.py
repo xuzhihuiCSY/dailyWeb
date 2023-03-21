@@ -33,7 +33,7 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok.io', '.loca.lt',]
 
 
 # Application definition
@@ -44,8 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize',
     'django.contrib.staticfiles',
     'MyApp',
+    'ecommerce',
+    'To_Do_List',
 ]
 
 MIDDLEWARE = [
@@ -125,12 +128,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
+STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-LOGOUT_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "MyApp:index"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

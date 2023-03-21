@@ -20,6 +20,7 @@ section{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    width: 100%;
     background: var(--body-color);
 }
 
@@ -220,3 +221,10 @@ section{
 .card .contact li a:hover p{
     color: #111;
 }
+
+@media screen and (max-width: 768px) {
+    body{
+        display: block;
+    }
+  }
+  

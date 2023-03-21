@@ -1,0 +1,232 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container{
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        padding: 30px;
+        width: 100%;
+        }
+    input {
+        outline: none;
+        border: none;
+    }
+
+    .header-bar {
+        display: flex;
+        justify-content: space-between;
+        color: #757575;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        /* background: linear-gradient(90deg, rgb(104, 219, 104) 0%, rgb(1, 168, 1) 43%, rgb(1, 121, 1) 100%); */
+    }
+
+    .header-bar a {
+        color: rgb(247, 247, 247);
+        text-decoration: none;
+    }
+
+    .task-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--nav-color);
+        border-top: 1px solid #dfe4ea;
+        overflow: hidden;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .task-wrapper:hover {
+        /*jump up*/
+        transform: translateY(-10px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 20);
+    }
+
+    .task-title {
+        display: flex;
+        padding: 20px;
+        align-items: center;
+        color: white;
+
+    }
+
+    .task-title a {
+        text-decoration: none;
+        color: white;
+        margin-left: 10px;
+    }
+
+    
+    .task-complete-icon {
+        height: 20px;
+        width: 20px;
+        background-color: lightgray;
+        border-radius: 50%;
+    }
+
+    .task-incomplete-icon {
+        height: 20px;
+        width: 20px;
+        background-color: #AE5ADB;
+        border-radius: 50%;
+    }
+
+    .delete-link {
+        display: flex;
+        text-decoration: none;
+        font-weight: 1000;
+        align-items: center;
+        color: #F12E5E;
+        font-size: 40px;
+        line-height: 0;
+        padding: 20px 20px;
+        /* background-color: var(--ligthForother-nav); */
+        transition: all 0.3s ease;
+    }
+
+    .delete-link:hover {
+        background-color: #F12E5E;
+        color: var(--ligthForother-nav);
+    }
+
+    /*Handle Classes*/
+
+    .handle {
+        display: inline-block;
+        padding: 20px 16px;
+        cursor: grab;
+        user-select: none;
+    }
+
+    .handle:after,
+    .handle:before {
+        display: block;
+        content: "";
+    }
+
+    .handle:active,
+    .handle:active:before,
+    .handle:active:after {
+        cursor: grabbing;
+    }
+
+    .dropArea {
+        background-color: #f1f2f6;
+        color: black;
+        border: #ced6e0 1px solid;
+    }
+
+    .selectedTask {
+        opacity: 0.6;
+    }
+
+
+    #add-link {
+        color: var(--nav-color);
+        text-decoration: none;
+        font-size: 50px;
+        /* text-shadow: 1px 1px #81413b; */
+        transition: all 0.3s ease;
+    }
+
+    #add-link:hover {
+        color: #F12E5E;
+        /*spinnig effect*/
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    #search-add-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    @media screen and (max-width:320px) {
+        #search-add-wrapper {
+            padding: 10px;
+        }
+    }
+
+    form{
+        text-align: center;
+    }
+
+    input[type=text],
+    input[type=password],
+    textarea {
+        border: 1px solid #ccc;
+        border-radius: 50px;
+        padding: 10px;
+        width: 90%;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    input[type=text]:focus,
+    input[type=password]:focus,
+    textarea:focus {
+        border-color: var(--nav-color);
+        border-radius: 0%;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+
+    label {
+        padding-top: 10px !important;
+        display: block;
+    }
+
+    ::placeholder {
+        font-weight: 300;
+        opacity: 0.5;
+    }
+
+    .button {
+        background-color: var(--nav-color);
+        border: none;
+        color: #fff;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .button:hover {
+        /* jumps up and down, up and down*/
+        animation: jump 0.5s ease-in-out infinite alternate;
+
+    }
+
+    @keyframes jump {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+    .card-body {
+        padding: 20px;
+    }

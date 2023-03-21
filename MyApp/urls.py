@@ -4,9 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
-
-
+from ecommerce.views import Ecommerce_index,product_detail,add_to_cart,remove_from_cart,cart,checkout,order_confirmation
+app_name = 'MyApp'
 urlpatterns = [
+    
     path('', views.index, name='index'),
     path('index', views.index, name='index'),
     path('login',views.login,name='login'),
@@ -47,11 +48,21 @@ urlpatterns = [
     #more list
     path('more_list',views.more_list,name='more_list'),
 
+    #chess
+    path('chess',views.chess,name='chess'),
+
     #contact
     path('contact/', views.contact, name='contact'),
 
     #weather
     path('weather/', views.weather, name='weather'),
+    #ecommerce
+    path('ecommerce/', include('ecommerce.urls')),
+
+    #To_Do_List
+    path('To_Do_List/', include('To_Do_List.urls')),
     
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

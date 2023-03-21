@@ -11,17 +11,20 @@ from newsapi import NewsApiClient
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-
+import os
 import json
 import urllib.request
 from urllib.error import HTTPError
-
+from ecommerce.models import Order
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.urls import reverse_lazy
+from To_Do_List.models import Task
 
-@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('login'))
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def more_list(request):
     if not request.user.is_authenticated:
         messages.info(request, 'Please log in to use this feature.')
@@ -44,10 +47,10 @@ def login(request):
 
             if user is not None:
                 auth.login(request,user)
-                return redirect('index')
+                return redirect('MyApp:index')
             else:
                 messages.info(request,'Credentials Invalid')
-                return redirect('login')
+                return redirect('MyApp:login')
         elif request.POST.get('submit') == 'signUp':
             # your sign up
             username = request.POST['username']
@@ -58,18 +61,18 @@ def login(request):
             if password == password2:
                 if User.objects.filter(email=email).exists():
                     messages.info(request,'Email Used')
-                    return redirect('login')
+                    return redirect('MyApp:login')
                 elif User.objects.filter(username=username).exists():
                     messages.info(request,'Username Used')
-                    return redirect('login')
+                    return redirect('MyApp:login')
                 else:
                     user = User.objects.create_user(username=username,email=email,password=password)
                     user.save()
                     auth.login(request,user)
-                    return redirect('index')
+                    return redirect('MyApp:index')
             else:
                 messages.info(request,'Password Not the Same')
-                return redirect('login')
+                return redirect('MyApp:login')
     else:
         return render(request,'login.html')
 
@@ -79,16 +82,20 @@ def upload_song(request):
         form = SongForm(request.POST, request.FILES)
         if form.is_valid():
             album_list = form.cleaned_data['albums']
-            # Save the song object and assign the selected albums to it
             song = form.save(commit=False)
             song.uploader = request.user
             song.save()
             song.albums.set(album_list)
-            song.save()
-            return redirect('music_index')
+            return redirect('MyApp:music_index')
     else:
         form = SongForm()
     return render(request, 'music/music_upload.html', {'form': form})
+
+@receiver(post_save, sender=Song)
+def set_default_cover(sender, instance, created, **kwargs):
+    if created and not instance.cover:
+        instance.cover.name = os.path.join(settings.MEDIA_ROOT, 'cover', 'default.jpg')
+        instance.save()
 
 def music_index(request):
     query = request.GET.get('q')
@@ -105,17 +112,16 @@ def create_album(request):
         form = AlbumForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('music_index')
+            return redirect('MyApp:music_index')
     else:
         form = AlbumForm()
     return render(request, 'music/create_album.html', {'form': form})
 
 def album_detail(request, album_id):
-    album_id = album_id
     album = Album.objects.get(id=album_id)
-    #get songs that have the Album as model
     songs = Song.objects.filter(albums=album_id)
-    return render(request, 'music/album_detail.html', {'album': album, 'songs': songs})
+    context = {'album': album, 'songs': songs}
+    return render(request, 'music/album_detail.html', context)
 
 def like_song(request, song_id):
     song = get_object_or_404(Song, id=song_id)
@@ -139,7 +145,9 @@ def song_detail(request, song_id):
             is_liked = False
         else:
             is_liked = True
-    
+    if request.user.is_authenticated:
+        if Like.objects.filter(Song=song, user=request.user).exists():
+            is_liked = True
     context = {
         'song': song,
         'is_liked': is_liked,
@@ -155,7 +163,7 @@ def song_edit(request, song_id):
         form = SongForm(request.POST, request.FILES, instance=song)
         if form.is_valid():
             form.save()
-            return redirect('music_index')
+            return redirect('MyApp:user', user_id=request.user.id)
     else:
         form = SongForm(instance=song)
     return render(request, 'music/song_edit.html', {'form': form})
@@ -165,7 +173,7 @@ def song_delete(request, song_id):
     song = get_object_or_404(Song, id=song_id)
     if request.method == 'POST':
         song.delete()
-        return redirect('music_index')
+        return redirect('MyApp:user', user_id=request.user.id)
     return render(request, 'music/song_delete.html', {'song': song})
 
 #album edit
@@ -175,7 +183,7 @@ def album_edit(request, album_id):
         form = AlbumForm(request.POST, request.FILES, instance=album)
         if form.is_valid():
             form.save()
-            return redirect('music_index')
+            return redirect('MyApp:user', user_id=request.user.id)
     else:
         form = AlbumForm(instance=album)
     return render(request, 'music/album_edit.html', {'form': form})
@@ -185,7 +193,7 @@ def album_delete(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
         album.delete()
-        return redirect('music_index')
+        return redirect('MyApp:user', user_id=request.user.id)
     return render(request, 'music/album_delete.html', {'album': album})
 
 def video_index(request):
@@ -203,7 +211,7 @@ def create_episode(request):
         form = EpisodeForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('video_index')
+            return redirect('MyApp:video_index')
     else:
         form = EpisodeForm()
 
@@ -218,7 +226,7 @@ def upload_video(request, episode_id):
             video.uploader = request.user
             video.save()
             video.episode.set([episode])
-            return redirect('video_index')
+            return redirect('MyApp:video_index')
     else:
         form = VideoForm()
     return render(request, 'video/upload_video.html', {'form':form})
@@ -243,7 +251,7 @@ def video_detail(request, video_id):
             comment.video = video
             comment.user = request.user
             comment.save()
-            return redirect('video_detail', video_id)
+            return redirect('MyApp:video_detail', video_id)
     else:
         form = VideoCommentForm()
     context = {
@@ -258,14 +266,14 @@ def episode_delete(request, episode_id):
     episode = get_object_or_404(Episode, pk=episode_id)
     if request.method == 'POST':
         episode.delete()
-        return redirect('user_page', username=request.user.id)
+        return redirect('MyApp:user', user_id=request.user.id)
     return render(request, 'video/episode_delete.html', {'episode':episode})
 
 def video_delete(request, video_id):
     video = get_object_or_404(Video, pk=video_id)
     if request.method == 'POST':
         video.delete()
-        return redirect('user_page', username=request.user.id)
+        return redirect('MyApp:user', user_id=request.user.id)
     return render(request, 'video/video_delete.html', {'video':video})
 
 def episode_edit(request, episode_id):
@@ -274,7 +282,7 @@ def episode_edit(request, episode_id):
         form = EpisodeForm(request.POST, request.FILES, instance=episode)
         if form.is_valid():
             form.save()
-            return redirect('user_page', username=request.user.id)
+            return redirect('MyApp:user', user_id=request.user.id)
     else:
         form = EpisodeForm(instance=episode)
     return render(request, 'video/episode_edit.html', {'form':form})
@@ -285,7 +293,7 @@ def video_edit(request, video_id):
         form = VideoForm(request.POST, request.FILES, instance=video)
         if form.is_valid():
             form.save()
-            return redirect('user_page', username=request.user.id)
+            return redirect('MyApp:user', user_id=request.user.id)
     else:
         form = VideoForm(instance=video)
     return render(request, 'video/video_edit.html', {'form':form})
@@ -297,7 +305,11 @@ def user(request, user_id):
     likes = Like.objects.filter(user=user_id)
     episodes = Episode.objects.filter(uploader=user)
     videos = Video.objects.filter(uploader=user)
-    return render(request, 'user.html', {'user': user, 'albums': albums, 'songs': songs, 'likes': likes, 'episodes': episodes, 'videos': videos})
+    orders = Order.objects.filter(user=user_id)
+    tasks = Task.objects.filter(user=user_id, complete=False)
+    return render(request, 'user.html', {'user': user, 'albums': albums, 'songs': songs, 
+                                         'likes': likes, 'episodes': episodes, 'videos': videos,
+                                         'orders': orders,'tasks': tasks})
 
 def news_page(request):
     if 'query' in request.GET:
@@ -335,7 +347,7 @@ def contact(request):
                 [settings.DEFAULT_FROM_EMAIL],
             )
             # go back to index page
-            return redirect('index')
+            return redirect('MyApp:index')
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form': form})
@@ -392,3 +404,9 @@ def get_weather_icon(weather):
     else:
         return ''
 
+def chess(request):
+    pieces = ['wK', 'bK', 'wQ', 'bQ', 'wR', 'bR', 'wB', 'bB', 'wN', 'bN', 'wP', 'bP']
+    context = {
+        'pieces': pieces
+    }
+    return render(request, 'more/chess.html', context)
