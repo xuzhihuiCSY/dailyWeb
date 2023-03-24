@@ -10,8 +10,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     background: var(--body-color);
+    overflow: hidden;
 }
 
 
@@ -223,8 +223,12 @@ section{
 }
 
 @media screen and (max-width: 768px) {
+    .nameCard{
+        display: none;
+    }
+
     body{
-        display: block;
+        overflow: hidden;
     }
   }
   
