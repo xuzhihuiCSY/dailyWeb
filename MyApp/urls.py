@@ -4,9 +4,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
+from django.contrib import admin
+from django.urls import path
+from django.views.generic.base import RedirectView
+
+admin.site.site_header = 'daily Web page'
+admin.site.site_title = 'Daily Web page'
 from ecommerce.views import Ecommerce_index,product_detail,add_to_cart,remove_from_cart,cart,checkout,order_confirmation
 app_name = 'MyApp'
 urlpatterns = [
+
+    path('admin/', admin.site.urls),
     
     path('', views.index, name='index'),
     path('index', views.index, name='index'),
@@ -27,6 +35,8 @@ urlpatterns = [
     path('album_edit/<int:album_id>', views.album_edit, name='album_edit'),
     # album_delete
     path('album_delete/<int:album_id>', views.album_delete, name='album_delete'),
+    #liked song list
+    path('liked_song_list', views.liked_song_list, name='liked_song_list'),
 
     path('video_index', views.video_index, name='video_index'),
     path('create_episode', views.create_episode, name='create_episode'),
@@ -42,6 +52,8 @@ urlpatterns = [
     #episode delete
     path('episode_delete/<int:episode_id>', views.episode_delete, name='episode_delete'),
 
+
+
     #news page
     path('news_page',views.news_page,name='news_page'),
 
@@ -50,6 +62,9 @@ urlpatterns = [
 
     #chess
     path('chess',views.chess,name='chess'),
+
+    #wheel
+    path('wheel',views.wheel,name='wheel'),
 
     #contact
     path('contact/', views.contact, name='contact'),

@@ -15,6 +15,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import os
+import requests
 import json
 import urllib.request
 from urllib.error import HTTPError
@@ -76,7 +77,7 @@ def login(request):
     else:
         return render(request,'login.html')
 
-
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def upload_song(request):
     if request.method == 'POST':
         form = SongForm(request.POST, request.FILES)
@@ -107,6 +108,7 @@ def music_index(request):
         songs = Song.objects.all()
     return render(request, 'music/music_index.html', {'albums': albums, 'songs': songs})
 
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def create_album(request):
     if request.method == 'POST':
         form = AlbumForm(request.POST, request.FILES)
@@ -133,6 +135,16 @@ def unlike_song(request, song_id):
     Like.objects.filter(user=request.user, song=song).delete()
     return redirect('music/song_detail', song_id=song_id)
 
+# liked song list page
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
+def liked_song_list(request):
+    user = request.user
+    liked_songs = Like.objects.filter(user=user)
+    context = {
+        'liked_songs': liked_songs,
+    }
+    return render(request, 'music/liked_song_list.html', context)
+
 def song_detail(request, song_id):
     song = get_object_or_404(Song, id=song_id)
     user = request.user
@@ -157,6 +169,7 @@ def song_detail(request, song_id):
 
 
 #song edit or delete page
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def song_edit(request, song_id):
     song = Song.objects.get(id=song_id)
     if request.method == 'POST':
@@ -169,6 +182,7 @@ def song_edit(request, song_id):
     return render(request, 'music/song_edit.html', {'form': form})
 
 #song delete confirm page
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def song_delete(request, song_id):
     song = get_object_or_404(Song, id=song_id)
     if request.method == 'POST':
@@ -177,6 +191,7 @@ def song_delete(request, song_id):
     return render(request, 'music/song_delete.html', {'song': song})
 
 #album edit
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def album_edit(request, album_id):
     album = Album.objects.get(id=album_id)
     if request.method == 'POST':
@@ -189,6 +204,7 @@ def album_edit(request, album_id):
     return render(request, 'music/album_edit.html', {'form': form})
 
 #album delete
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def album_delete(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
@@ -410,3 +426,7 @@ def chess(request):
         'pieces': pieces
     }
     return render(request, 'more/chess.html', context)
+
+def wheel(request):
+    return render(request, 'more/wheel.html')
+
