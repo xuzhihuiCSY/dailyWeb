@@ -1,0 +1,28 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+<div>
+<h1>Liked Songs</h1>
+{% if liked_songs %}
+  <ul>
+    {% for like in liked_songs %}
+      <li>
+        <h2><a href="{% url 'MyApp:song_detail' like.Song.id %}">{{ like.Song.title }} by {{ like.Song.artist }}</a></h2>
+        <audio controls src="{{ like.Song.file.url }}"></audio>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You haven't liked any songs yet.</p>
+{% endif %}
+</div>
+
+{% endblock content %}

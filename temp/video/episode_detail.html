@@ -17,7 +17,7 @@
 
 <!-- display episode title -->
 <h1 class="episode-title">{{ episode.title }}</h1>
-<a href="{% url 'video_index' %}">back</a>
+<a href="{% url 'MyApp:video_index' %}">back</a>
 <!-- display episode description -->
 <div class="episode-description">
     {{ episode.description }}
@@ -27,13 +27,13 @@
 <div class="episode-videos">
     {% for video in videos %}
         <h4>{{ video.title }}
-            <a href="{% url 'video_detail' video.id %}">watch</a>
+            <a href="{% url 'MyApp:video_detail' video.id %}">watch</a>
         </h4>
     {% endfor %}
 </div>
 {% if user.is_authenticated %}
 <!-- upload video-->
-<a href="{% url 'upload_video' episode.id %}">upload video</a>
+<a href="{% url 'MyApp:upload_video' episode.id %}">upload video</a>
 {% endif %}
 </div>
 {% endblock content %}

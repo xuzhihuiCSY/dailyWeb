@@ -1,0 +1,20 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'todo.css' %}">
+<div class="container">
+    <div class="header-bar">
+        <h2>Update Task</h2>
+        <button class="button"><a href="{% url 'To_Do_List:tasks' %}">&#8592; Back</a></button>
+    </div>
+
+
+    <div class="card-body">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input class="button" type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+{% endblock content %}

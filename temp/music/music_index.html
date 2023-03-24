@@ -3,23 +3,53 @@
 {% block content %}
 
 <style>
-  body{
+  body {
     background-color: whitesmoke;
     overflow-x: hidden;
   }
+
   .spotify-playlists {
     padding: 20px 40px;
     border-bottom: 5px solid var(--nav-color);
+    overflow: hidden;
+    flex-wrap: wrap;
   }
-  .spotify-playlists h1 {
+
+  .spotify-playlists .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .spotify-playlists h1, .spotify-playlists h2 {
     color: var(--nav-color);
     font-size: 30px;
     margin-bottom: 20px;
   }
+
   .spotify-playlists h2 {
-    color: var(--nav-color);
-    font-size: 22px;
-    margin-bottom: 20px;
+    display: inline-block;
+  }
+
+  .spotify-playlists form {
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  .spotify-playlists input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+
+  .spotify-playlists button[type="submit"] {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--nav-color);
+    color: #fff;
+    cursor: pointer;
   }
 
   .spotify-playlists .list {
@@ -28,10 +58,18 @@
     animation: animate 10s linear infinite;
     animation-direction: forwards;
   }
+  @keyframes animate {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
 
   .spotify-playlists .list:hover {
-  animation-play-state: paused;
-}
+    animation-play-state: paused;
+  }
 
   .spotify-playlists .list .item {
     min-width: 140px;
@@ -41,16 +79,6 @@
     border-radius: 6px;
     cursor: pointer;
     transition: all ease 0.4s;
-
-  }
-
-@keyframes animate {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
   }
 
   .spotify-playlists .list .item:hover {
@@ -104,16 +132,64 @@
     border-color: #636363;
   }
 
-  
-</style>
-<div style="position: relative;top:70px;">
-<div class="spotify-playlists">
-  <h1>Music Library</h1>
-  <form method="get">
-    <input type="text" name="q" placeholder="Search Albums and Songs">
-    <button type="submit">Search</button>
-  </form>
+  .w3-sidebar{
+    margin-top: 60px;
+    border-right: 5px solid var(--ligthForother-nav);
+    color: var(--ligthForother-nav);
+    z-index: 1;
+  }
 
+
+  .MusicMainPart{
+    margin-top: 70px; margin-left:300px;
+  }
+
+  @media (max-width: 895px) {
+    form .SA{
+      width: 100%;
+    }
+    form .Si{
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .w3-sidebar{
+      display: none;
+    }
+    .MusicMainPart{
+      margin-left: 0px;
+    }
+  }
+
+
+</style>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="w3-sidebar w3-bar-block" style="width: 300px;">
+  <h2 class="w3-bar-item" style="background-color: var(--ligthForother-nav); color:var(--text-color);">Menu</h2>
+  <a href="index" class="w3-bar-item w3-button"><h4><i class="fas fa-home"></i> Home Page</h4></a>
+  <a href="liked_song_list" class="w3-bar-item w3-button"><h4><i class="fas fa-heart"></i> Liked Songs</h4></a>
+  <a href="create_album" class="w3-bar-item w3-button"><h4><i class="fas fa-edit"></i> Create Album</h4></a>
+  <a href="upload" class="w3-bar-item w3-button"><h4><i class="fas fa-edit"></i> Upload Song</h4></a>
+  <a href="#" class="w3-bar-item w3-button"><h4><i class="fas fa-cog"></i> Manage Albums</h4></a>
+  <a href="#" class="w3-bar-item w3-button"><h4><i class="fas fa-cog"></i> Manage Songs</h4></a>
+  <div class="w3-bar-item" style="position: absolute; bottom: 0; width: 100%;">
+    <p style="text-align: center; margin-bottom: 0;">made with love</p>
+  </div>
+</div>
+
+<div class="MusicMainPart">
+<div class="spotify-playlists">
+  <div class="head">
+    <h1><b>Music Library</h1>
+    <form method="get">
+      <input type="text" name="q" placeholder="Search Albums and Songs" class="Si">
+      <button type="submit" class="SA">Search <i class="fas fa-search"></i></button>
+    </form>
+  </div>
 
 </div>
 
@@ -169,8 +245,6 @@
   {% endif %}
   </div>
 </div>
-
-<div style="text-align: center;"><p>made with love</p></div>
 
 </div>
 <script src="https://kit.fontawesome.com/23cecef777.js" crossorigin="anonymous"></script>

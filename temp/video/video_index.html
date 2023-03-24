@@ -23,7 +23,7 @@
 <ul>
     {% for episode in episodes %}
         {% if forloop.counter <= 5 %}
-            <li><a href="{% url 'episode_detail' episode.id %}">{{ episode.title }}</a></li>
+            <li><a href="{% url 'MyApp:episode_detail' episode.id %}">{{ episode.title }}</a></li>
             <li><img src="{{ episode.cover.url }}" alt="{{ episode.title }} cover" width="200" height="200"></li>
         {% endif %}
     {% endfor %}
@@ -65,7 +65,7 @@
     {% endfor %}
 </ul>
 {% if user.is_authenticated %}
-<a href="{% url 'create_episode' %}">create New episode</a>
+<a href="{% url 'MyApp:create_episode' %}">create New episode</a>
 {% endif %}
 </div>
 {% endblock content %}

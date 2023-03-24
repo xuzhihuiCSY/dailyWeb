@@ -10,7 +10,7 @@
     {% csrf_token %}
     <button type="submit">Confirm</button>
 </form>
-<a href="{% url 'music_index' %}">Cancel</a>
+<a href="{% url 'MyApp:user' user.id %}">Cancel</a>
 
 </div>
 

@@ -1,32 +1,85 @@
-<!-- album_detail.html -->
-<!-- Path: temp\album_detail.html -->
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
 
 <style>
-  body{
+  body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .detail {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 30px;
+    max-width: 600px;
+    min-height: 90px;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+  }
+
+  .song_list {
+    list-style: none;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .song_list:last-child {
+    border-bottom: none;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  .back-btn {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
   }
 </style>
-<div>
-<!--display the album cover as A_cover first-->
-<img src="{{ album.A_cover.url }}" alt="Album Cover" width="200" height="200">
 
-<!--display the album title-->
-<h1>{{ album.album_title }}</h1>
+<div class="detail">
+  <!--display the album cover as A_cover first-->
+  <img src="{{ album.A_cover.url }}" alt="Album Cover" width="300px" height="300px">
 
-<!--display the artist name-->
-<h2>{{ album.artist }}</h2>
+  <!--display the album title-->
+  <h1>{{ album.album_title }}</h1>
 
-<!--display the songs-->
-{% for song in songs %}
-  <li>{{ song.title }} by {{ song.artist }}</li>
-{% endfor %}
+  <!--display the artist name-->
+  <h2>{{ album.artist }}</h2>
 
-<a href="{% url 'music_index' %}">back</a>
+  <!--display the songs-->
+  <ul>
+    {% for song in songs %}
+      <li class="song_list">
+        <a href="{% url 'MyApp:song_detail' song.id%}" style="text-decoration: none">{{ song.title }}</a>
+        <audio controls>
+          <source src="{{ song.file.url }}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'MyApp:music_index' %}" class="back-btn">back</a>
 
 </div>
 

@@ -3,36 +3,285 @@
 {% block content %}
 
 <style>
-  body{
+  /* body {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    background-color: #fafafa;
+  }
+
+  .container {
+    display: block;
+    max-width: 600px;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+
+  h1, h2 {
+    margin-top: 0;
+  }
+
+  audio {
+    margin: 1rem 0;
+  }
+
+  form {
+    display: flex;
+    justify-content: center;
+  }
+
+  button {
+    padding: 0.5rem;
+    margin-top: 1rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #0069d9;
+  }
+
+  .back-btn {
+    display: block;
+    margin: 1rem auto;
+
+    color: #007bff;
+    text-decoration: none;
+    transition: text-decoration 0.2s ease-in-out;
+    text-align: center;
+  }
+
+  .back-btn:hover {
+    text-decoration: underline; 
+  }*/
+
+  body {
+
+margin: 0;
+
+min-height: 100vh;
+
+/* background: #c9ced3; */
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-family: Nunito, sans-serif;
+
+font-size: 12px;
+
+}
+
+.fix {
+  margin-top: 60px;
+}
+
+.bg-container {
+
+position: fixed;
+
+top: -50%;
+
+left: -50%;
+
+width: 200%;
+
+height: 200%;
+
+z-index: -1;
+
+margin-top: 40px;
+
+}
+
+.bg-container img {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+right: 0;
+
+bottom: 0;
+
+margin: auto;
+
+min-width: 50%;
+
+min-height: 50%;
+
+filter: blur(15px);
+
+-webkit-filter: blur(50px);
+
+transform: scale(1.1);
+
+}
+
+.player-container {
+
+
+width: 400px;
+
+background: #e7e7e7;
+
+border-radius: 20px;
+
+box-shadow: 0 15px 30px 5px rgba(0, 0, 0, 0.3);
+
+}
+
+.img-container {
+
+width: 300px;
+
+height: 300px;
+
+position: relative;
+
+top: -50px;
+
+left: 50px;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+}
+
+.img-container img {
+
+height: 0;
+
+width: 0;
+
+opacity: 0;
+
+object-fit: cover;
+
+border-radius: 20px;
+
+box-shadow: 0 5px 30px 5px rgba(0, 0, 0, 0.5);
+
+transition: .5s;
+
+}
+
+.img-container img.active {
+
+transition: .5s;
+
+opacity: 1;
+
+width: 100%;
+
+height: 100%;
+
+}
+
+h2 {
+
+font-size: 25px;
+
+text-align: center;
+
+margin: 0;
+
+}
+
+h3 {
+
+font-size: 20px;
+
+text-align: center;
+
+font-weight: 400;
+
+margin: 5px 0 0;
+
+}
+
+.song-audio {
+width: 100%;
+margin: 20px 0;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+  }
+
+button {
+    padding: 0.5rem;
+    margin-top: 1rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #0069d9;
+  }
+
+  .back-btn {
+    display: block;
+    margin: 1rem auto;
+
+    color: #007bff;
+    text-decoration: none;
+    transition: text-decoration 0.2s ease-in-out;
+    text-align: center;
+  }
+
+  .back-btn:hover {
+    text-decoration: underline; 
   }
 </style>
-<div>
-<!--song title-->
-<h1>{{ song.title }}</h1>
-
-<!--song artist-->
-<h2>{{ song.artist }}</h2>
-
-<!--play the song-->
-<audio controls>
-  <source src="{{ song.file.url }}" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-
-<form action="{% url 'song_detail' song.id %}" method="post">
-  {% csrf_token %}
-  {% if is_liked %}
-    <input type="submit" value="Unlike">
-  {% else %}
-    <input type="submit" value="Like">
-  {% endif %}
-</form>
-
-<a href="{% url 'music_index' %}">back</a>
-
+<div class="fix">
+<div class="bg-container">
+  <!-- <img src="{{ song.cover.url }}" alt="" id="background"> -->
 </div>
 
+<div class="player-container">
+  <div class="img-container">
+    <img src="{{ song.cover.url }}" alt="" id="cover" class="active">
+  </div>
+  <h2 id="title">{{ song.title }}</h2>
+
+  <h3 id="artist">{{ song.artist }}</h3>
+
+  <audio controls class="song-audio">
+    <source src="{{ song.file.url }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  {% if user.is_authenticated %}
+    <form action="{% url 'MyApp:song_detail' song.id %}" method="post">
+      {% csrf_token %}
+      {% if is_liked %}
+        <button type="submit">Unlike</button>
+      {% else %}
+        <button type="submit">Like</button>
+      {% endif %}
+    </form>
+  {% endif %}
+  <a class="back-btn"href="{% url 'MyApp:music_index' %}">Back to music index</a>
+</div>
+</div>
 {% endblock content %}

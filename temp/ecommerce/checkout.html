@@ -1,0 +1,32 @@
+<h1>Checkout</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Place Order</button>
+</form>
+<hr>
+<h2>Cart Summary</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart_items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.product.price }}</td>
+        <td>{{ item.product.price * item.quantity }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3">Total</td>
+      <td>{{ total_price }}</td>
+    </tr>
+  </tbody>
+</table>

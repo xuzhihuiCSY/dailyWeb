@@ -2,12 +2,12 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="{% static 'contact.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<body>
-<section>
+<body style="margin-top: 40px;">
+<section class="nameCard">
         <div class="card">
             <div class="user">
                 <div class="imgBx">
@@ -109,9 +109,69 @@
         </script>
 </section>
 
-<link rel="stylesheet" href="{% static 'Music_edit_style.css' %}">
+<style>
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post_field {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  padding: 30px;
+  width: 100%;
+}
+
+.post_field h1 {
+  color: #1c1c1c;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.post_field label {
+  color: #666;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.post_field input[type=text],
+.post_field input[type=email],
+.post_field textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.post_field textarea {
+  height: 150px;
+}
+
+button[type=submit] {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button[type=submit]:hover {
+  background-color: #0062cc;
+}
+
+</style>
 <section>
-<div style="width: 200px; height: 80px;"></div>
 <div class="post_field">
     <h1>Contact Us</h1>
     <form method="post">

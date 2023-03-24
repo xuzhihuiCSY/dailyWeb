@@ -1,0 +1,23 @@
+{% extends 'STY.html' %}
+{% load humanize %}
+
+{% load static %}
+{% block content %}
+<style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+<div>
+    <h1>Thank you for your order!</h1>
+    <p>Order ID: {{ order.id }}</p>
+    <p>Customer Name: {{ order.customer_name }}</p>
+    <p>Shipping Address: {{ order.shipping_address }}</p>
+    <p>Billing Address: {{ order.billing_address }}</p>
+    <p>Total Price: {{ order.total_price }}</p>
+    <p>Status: {{ order.status }}</p>
+    <a href="{% url 'ecommerce:Ecommerce_index' %}">back to store</a>
+{% endblock content %}

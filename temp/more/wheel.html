@@ -1,0 +1,80 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'wheel/wheel.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<script defer src="{% static 'wheel/wheel.js' %}"></script>
+<script src="{% static 'wheel/d3.js' %}" charset="utf-8"></script>
+
+<div id="spin-wheel-page" ontouchstart="p1handleTouchStart(event)" ontouchmove="p1handleTouchMove(event)"
+ontouchend="p1handleTouchEnd(event)">
+
+
+<div id="spin-container">
+  <div class="wheel-container">
+    <div id="chart"></div>
+    <div class="edit-btn-container">
+      <button id="edit-btn">Edit</button>
+      <button id="spin-btn">SPIN</button>
+      <button id="USETOSS">USE TOSS</button>
+    </div>
+  </div>
+
+  <div class="spin-controller" style="display: none;">
+    <div class="btn-container">
+      <button id="spin-btn">SPIN</button>
+      <button id="USETOSS">USE TOSS</button>
+    </div>
+  </div>
+</div>
+
+<div id="editItems-container">
+  <div class="save-btn-container">
+    <button id="done">Save</button>
+  </div>
+  <div>
+    <div id="current-items"> </div>
+    <div>
+      <div id="add-item-btn">
+        <button id="add-btn">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="add-item-wrapper">
+  <div id="addItem">
+    <label for="item">Add new item:</label>
+    <input autocomplete="off" type="text" id="item" name="item">
+    <div class="add-item-input-error-container">
+      <span id="add-item-input-error"></span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<!-- toss  -->
+<div id="toss-page" ontouchstart="p2handleTouchStart(event)" ontouchmove="p2handleTouchMove(event)"
+ontouchend="p2handleTouchEnd(event)">
+
+
+<div class="toss__container">
+
+  <div class="toss__coin-container">
+    <div class="coin__heads">
+      <img src="{% static 'wheel/heads.svg' %}" alt="heads">
+    </div>
+    <div class="coin__tails">
+      <img src="{% static 'wheel/tails.svg' %}" alt="tails">
+    </div>
+  </div>
+  <div class="tb">
+  <button id="toss-btn">TOSS</button>
+  <button id="USEW">USE Wheel</button>
+</div>
+</div>
+
+</div>
+{% endblock %}

@@ -6,13 +6,12 @@
   body{
     display: flex;
     justify-content: center;
-    align-items: center;
+    min-height: 600px;
   }
 </style>
-
-<div>
+<div style="padding-top: 80px;">
 <h2>{{ video.title }}</h2>
-<a href="{% url 'video_index' %}">back</a>
+<a href="{% url 'MyApp:video_index' %}">back</a>
 <p>Episode Number: {{ video.episode_number }}</p>
 
 <video width="400" controls>
@@ -24,7 +23,7 @@
     <h3>Videos under the same episode:</h3>
     {% for v in videos_in_same_episode %}
       <div class="video">
-        <h4><a href="{% url 'video_detail' v.id %}">{{ v.title }}</a></h4>
+        <h4><a href="{% url 'MyApp:video_detail' v.id %}">{{ v.title }}</a></h4>
       </div>
     {% endfor %}
   </div>
@@ -41,7 +40,7 @@
 </div>
 
 <h3>Add a Comment</h3>
-<form action="{% url 'video_detail' video.id %}" method="post">
+<form action="{% url 'MyApp:video_detail' video.id %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit">

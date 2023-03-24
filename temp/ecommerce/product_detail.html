@@ -1,0 +1,29 @@
+{% extends 'STY.html' %}
+{% load humanize %}
+
+{% load static %}
+{% block content %}
+<style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+<div>
+<div>
+    <h2>{{ product.name }}</h2>
+    <a href="{% url 'ecommerce:Ecommerce_index' %}">back to store</a>
+    <p>{{ product.description }}</p>
+    <p>{{ product.price }}</p>
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="200">
+</div>
+
+<form action="{% url 'ecommerce:add_to_cart' product.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Add to Cart">
+  </form>
+
+</div>
+{% endblock content %}

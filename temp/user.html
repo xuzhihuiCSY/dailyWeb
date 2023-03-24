@@ -15,27 +15,27 @@
         
     <!-- ===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-<title>Daliy Web</title>
+<title>User Page</title>
 </head>
 <body>
     <nav>
         <div class="nav-bar">
             <i class='bx bx-menu sidebarOpen' ></i>
-            <span class="logo navLogo"><a href="{% url 'index' %}">Home Page</a></span>
+            <span class="logo navLogo"><a href="{% url 'MyApp:index' %}">Daliy WebSiTe</a></span>
 
             <div class="menu">
                 <div class="logo-toggle">
-                    <span class="logo"><a href="{% url 'index' %}">Daliy WebSiTe</a></span>
+                    <span class="logo"><a href="{% url 'MyApp:index' %}">Daliy WebSiTe</a></span>
                     <i class='bx bx-x siderbarClose'></i>
                 </div>
 
                 <ul class="nav-links">
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'music_index' %}">Music</a></li>
-                    <li><a href="{% url 'video_index' %}">Video</a></li>
-                    <li><a href="{% url 'news_page' %}">News</a></li>
-                    <li><a href="{% url 'more_list' %}">More</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'MyApp:index' %}">Home</a></li>
+                    <li><a href="{% url 'MyApp:music_index' %}">Music</a></li>
+                    <li><a href="{% url 'MyApp:video_index' %}">Video</a></li>
+                    <li><a href="{% url 'MyApp:news_page' %}">News</a></li>
+                    <li><a href="{% url 'MyApp:more_list' %}">More</a></li>
+                    <li><a href="{% url 'MyApp:contact' %}">Contact</a></li>
                 </ul>
             </div>
 
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="user">
-                        <a href="{% url 'logout' %}">Logout</a>
+                        <a href="{% url 'MyApp:logout' %}">Logout</a>
                 </div>
 
                 <div class="searchBox">
@@ -98,7 +98,7 @@
         }
 
     </style>
-    <section class="S1">
+    <section class="S1" style="margin-top: 90px;">
         <div class="TXT1">
             <h1>Welcome {{ user.username }}</h1>
             <!--display the songs in Like-->
@@ -113,15 +113,11 @@
                 <p>No liked songs</p>
             {% endif %}
 
-            <!--display album title and song title-->
-            <!--if no show no created album or no uploaded songs-->
-
-
             <h3>Album Created</h3>
             {% if albums.all %}
                 <ul>
                     {% for album in  albums %}
-                <li>{{ album.album_title }} by {{ album.artist }}      <a href="{% url 'album_edit' album.id %}">edit</a>    <a href="{% url 'album_delete' album.id %}">delete</a></li>
+                <li>{{ album.album_title }} by {{ album.artist }}      <a href="{% url 'MyApp:album_edit' album.id %}">edit</a>    <a href="{% url 'MyApp:album_delete' album.id %}">delete</a></li>
                 {% endfor %}
             </ul>
             {% else %}
@@ -133,7 +129,7 @@
             {% if songs.all %}
                 <ul>
                     {% for song in songs.all %}
-                        <li>{{ song.title }}    <a href="{% url 'song_edit' song.id %}">edit</a>   <a href="{% url 'song_delete' song.id %}">delete</a></li>
+                        <li>{{ song.title }}    <a href="{% url 'MyApp:song_edit' song.id %}">edit</a>   <a href="{% url 'MyApp:song_delete' song.id %}">delete</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -144,7 +140,7 @@
             {% if episodes.all %}
                 <ul>
                     {% for episode in episodes.all %}
-                        <li>{{ episode.title }}    <a href="{% url 'episode_edit' episode.id %}">edit</a>   <a href="{% url 'episode_delete' episode.id %}">delete</a></li>
+                        <li>{{ episode.title }}    <a href="{% url 'MyApp:episode_edit' episode.id %}">edit</a>   <a href="{% url 'MyApp:episode_delete' episode.id %}">delete</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -155,14 +151,39 @@
             {% if videos.all %}
                 <ul>
                     {% for video in videos.all %}
-                        <li>{{ video.title }}    <a href="{% url 'video_edit' video.id %}">edit</a>   <a href="{% url 'video_delete' video.id %}">delete</a></li>
+                        <li>{{ video.title }}    <a href="{% url 'MyApp:video_edit' video.id %}">edit</a>   <a href="{% url 'MyApp:video_delete' video.id %}">delete</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
                 <p>No uploaded videos</p>
             {% endif %}
 
-            <a class= "logout"href="{% url 'logout' %}">Logout</a>
+
+            <h3>Orders from e-commerce</h3>
+            {% if orders.all %}
+                <ul>
+                    {% for order in orders.all %}
+                        {% if order.status != 'CANCELLED' and order.status != 'DELIVERED' %}
+                            <li>Order(${{ order.total_price }}) status: {{ order.status }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No orders</p>
+            {% endif %}
+
+            <h3>Tasks in To-do-list</h3>
+            {% if tasks.all %}
+                <ul>
+                    {% for task in tasks %}
+                        <li>{{task}}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No task</p>
+            {% endif %}
+
+            <a class= "logout"href="{% url 'MyApp:logout' %}">Logout</a>
         </div>
     </section>
       <!-- Swiper JS -->
