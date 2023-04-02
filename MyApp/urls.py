@@ -76,6 +76,10 @@ urlpatterns = [
 
     #To_Do_List
     path('To_Do_List/', include('To_Do_List.urls')),
+
+    #blog
+    path('blog/', include('blog.urls')),
+    
     
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 

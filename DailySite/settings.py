@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-q4^v+)53vv3#!3n6ytpih5crqsw%83ee@)q4_e=g=b^%g^_*2k
 DEBUG = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xuzhih@gmail.com'
-EMAIL_HOST_PASSWORD = 'kwhpxmjq'
+EMAIL_HOST_USER = 'xuzhihuieateat@gmail.com'
+EMAIL_HOST_PASSWORD = 'jluyqdmazzazofca'
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'MyApp',
     'ecommerce',
     'To_Do_List',
+    'blog',
 ]
 
 MIDDLEWARE = [
