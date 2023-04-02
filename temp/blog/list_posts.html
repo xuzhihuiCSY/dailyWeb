@@ -1,0 +1,20 @@
+{% extends 'STY.html' %}
+{% load static %}
+{% block content %}
+
+<div style="margin-top: 80px;">
+<h1>All Posts</h1>
+<a href="{% url 'blog:create_post' %}" class="btn btn-primary">Create Post</a>
+{% if posts %}
+  {% for post in posts %}
+    <div class="post">
+      <h2><a href="{% url 'blog:view_post' pk=post.pk %}">{{ post.title }}</a></h2>
+      <p>By {{ post.author }} on {{ post.created_at }}</p>
+      <p>{{ post.content }}</p>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No posts yet.</p>
+{% endif %}
+</div>
+{% endblock content %}
