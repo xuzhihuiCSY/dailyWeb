@@ -22,4 +22,5 @@ urlpatterns = [
     path('ecommerce/', include('ecommerce.urls')),
     path('To_Do_List/', include('To_Do_List.urls')),
     path('blog/', include('blog.urls')),
+    path("chat/", include("chat.urls")),
 ]

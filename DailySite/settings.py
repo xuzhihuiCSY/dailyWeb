@@ -27,18 +27,20 @@ SECRET_KEY = 'django-insecure-q4^v+)53vv3#!3n6ytpih5crqsw%83ee@)q4_e=g=b^%g^_*2k
 DEBUG = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xu@gmail.com'
-EMAIL_HOST_PASSWORD = 'key'
+EMAIL_HOST_USER = 'xuzhihuieateat@gmail.com'
+EMAIL_HOST_PASSWORD = 'tfkoyplxpppopfjq'
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok.io', '.loca.lt',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok.io', '.loca.lt','.ngrok-free.app']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,6 +83,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'DailySite.wsgi.application'
+ASGI_APPLICATION = "DailySite.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 # Database
