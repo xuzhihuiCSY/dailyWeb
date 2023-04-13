@@ -1,28 +1,79 @@
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
     }
-  </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <div>
-    <h1>Weather App</h1>
+    
+    .w_cont {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .Wtitle {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #4c4c4c;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .weather_icon{
+        font-size: 70px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+
+<div class="w_cont">
+    <h1 class="Wtitle">Weather App</h1>
     <form method="post">
         {% csrf_token %}
         <label for="city">Enter city name:</label>
         <input type="text" id="city" name="city" required>
-        <button type="submit">Get Weather</button>
+        <button type="submit" class="btn">Get Weather</button>
     </form>
     {% if data.city_not_found %}
         <p>City not found. Please enter a valid city name.</p>
     {% else %}
         <p>Current weather in {{ city }}:</p>
         {% if data.weather_icon %}
-            <p>{{ data.weather_icon|safe }} {{ data.weather }}</p>
+            <h1 class="weather_icon"><b>{{ data.weather_icon|safe }} {{ data.weather }}</b></h1>
         {% else %}
             <p>{{ data.weather }}</p>
         {% endif %}
@@ -30,8 +81,6 @@
         <p>Feels like: {{ data.feels_like }}</p>
         <p>Humidity: {{ data.humidity }}</p>
         <p>Pressure: {{ data.pressure }}</p>
-        <p>Coordinates: {{ data.coordinate }}</p>
-        <p>Country code: {{ data.country_code }}</p>
     {% endif %}
 </div>
 {% endblock %}

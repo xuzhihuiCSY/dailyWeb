@@ -3,27 +3,18 @@
 
 {% load static %}
 {% block content %}
-<style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+<link rel="stylesheet" href="{% static 'ecommerce_styles.css' %}">
 
-<div>
-<div>
+<div class="product-detail-container">
     <h2>{{ product.name }}</h2>
-    <a href="{% url 'ecommerce:Ecommerce_index' %}">back to store</a>
+    <a href="{% url 'ecommerce:Ecommerce_index' %}" class="store-link">Back to store</a>
     <p>{{ product.description }}</p>
     <p>{{ product.price }}</p>
-    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="200">
-</div>
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
 
-<form action="{% url 'ecommerce:add_to_cart' product.id %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Add to Cart">
-  </form>
-
+    <form action="{% url 'ecommerce:add_to_cart' product.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Add to Cart" class="submit-btn">
+    </form>
 </div>
 {% endblock content %}

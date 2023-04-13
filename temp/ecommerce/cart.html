@@ -3,17 +3,11 @@
 
 {% load static %}
 {% block content %}
-<style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+<link rel="stylesheet" href="{% static 'cart_styles.css' %}">
 
-<div>
-  <h1>Shopping Cart</h1>
-  <a href="{% url 'ecommerce:Ecommerce_index' %}">back to store</a>
+<div class="cart-container">
+    <h1>Shopping Cart</h1>
+    <a href="{% url 'ecommerce:Ecommerce_index' %}" class="back-to-store">Back to store</a>
     {% if cart_items %}
         <table>
             <thead>
@@ -30,25 +24,24 @@
                         <td>{{ cart_item.product.name }}</td>
                         <td>{{ cart_item.product.price }}</td>
                         <td>{{ cart_item.quantity }}</td>
-                        <td>
+                        <td class="actions">
                             <a href="{% url 'ecommerce:add_to_cart' cart_item.product.id %}">+</a>
                             <a href="{% url 'ecommerce:remove_from_cart' cart_item.product.id %}">-</a>
                         </td>
                     </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                <p>total_price: ${{total_price}}</p>
-                <hr>
-            
-                <h2>Checkout</h2>
-                <form method="POST" action="{% url 'ecommerce:checkout' %}">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  <button type="submit">Place Order</button>
-                </form>
-              {% else %}
-                <p>Your cart is empty.</p>
-              {% endif %}
-            </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>Total Price: ${{ total_price }}</p>
+        <hr>
+        <h2>Checkout</h2>
+        <form method="POST" action="{% url 'ecommerce:checkout' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Place Order</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
 {% endblock content %}

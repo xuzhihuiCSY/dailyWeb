@@ -1,41 +1,41 @@
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'blog_styles.css' %}">
 
 <div style="margin-top: 80px;">
-<h1>{{ post.title }}</h1>
-  <p>By {{ post.author }} on {{ post.created_at }}</p>
-  <p>{{ post.content }}</p>
+    <h1>{{ post.title }}</h1>
+    <p>By {{ post.author }} on {{ post.created_at }}</p>
+    <p>{{ post.content }}</p>
 
-  {% if request.user == post.author %}
-    <a href="{% url 'blog:edit_post' pk=post.pk %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'blog:delete_post' pk=post.pk %}" class="btn btn-danger">Delete</a>
-  {% endif %}
+    {% if request.user == post.author %}
+        <a href="{% url 'blog:edit_post' pk=post.pk %}" class="btn">Edit</a>
+        <a href="{% url 'blog:delete_post' pk=post.pk %}" class="btn btn-danger">Delete</a>
+    {% endif %}
 
-  <a href="{% url 'blog:list_posts' %}" class="btn btn-secondary">Back to List</a>
+    <a href="{% url 'blog:list_posts' %}" class="btn btn-secondary">Back to List</a>
 
-  <h2>Comments:</h2>
-  {% for comment in post.comments.all %}
-    <div class="comment">
-      <p>=============================================================</p>
-      <p>Comment by {{ comment.author }} on {{ comment.created_date }}</p>
-      <p>{{ comment.text }}</p>
-      {% if request.user == post.author or request.user == comment.author %}
-        <a href="{% url 'blog:comment_remove' pk=comment.pk %}">Remove</a>
-        {% if not comment.approved_comment %}
-          <a href="{% url 'blog:comment_approve' pk=comment.pk %}">Approve</a>
-        {% endif %}
-      {% endif %}
-    </div>
-  {% empty %}
-    <p>No comments yet.</p>
-  {% endfor %}
+    <h2>Comments:</h2>
+    {% for comment in post.comments.all %}
+        <div class="comment">
+            <p>Comment by {{ comment.author }} on {{ comment.created_date }}</p>
+            <p>{{ comment.text }}</p>
+            {% if request.user == post.author or request.user == comment.author %}
+                <a href="{% url 'blog:comment_remove' pk=comment.pk %}">Remove</a>
+                {% if not comment.approved_comment %}
+                    <a href="{% url 'blog:comment_approve' pk=comment.pk %}">Approve</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
 
-  <h3>Add a comment:</h3>
-  <form method="post" class="comment-form">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <button type="submit" class="btn btn-primary">Add comment</button>
-  </form>
+    <h3>Add a comment:</h3>
+    <form method="post" class="comment-form">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn">Add comment</button>
+    </form>
 </div>
 {% endblock content %}

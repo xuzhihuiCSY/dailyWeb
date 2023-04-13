@@ -1,15 +1,16 @@
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'blog_styles.css' %}">
 
 <div style="margin-top: 80px;">
-<h1>Create a New Post</h1>
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Save</button>
-</form>
-<!-- back to list -->
-<a href="{% url 'blog:list_posts' %}" class="btn btn-secondary">Back to List</a>
+    <h1>Create a New Post</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Save</button>
+    </form>
+    <!-- back to list -->
+    <a href="{% url 'blog:list_posts' %}" class="btn btn-secondary">Back to List</a>
 </div>
 {% endblock content %}

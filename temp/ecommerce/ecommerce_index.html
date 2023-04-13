@@ -1,46 +1,38 @@
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
-<style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-
-<div>
+<link rel="stylesheet" href="{% static 'ecommerce_styles.css' %}">
 {% load humanize %}
-  <h1 style="display: inline-block;">Store</h1>
-  {% if request.user.is_authenticated %}
-  <a href="{% url 'ecommerce:cart' %}" style="display: inline-block;">your shopping cart</a>
-  {% endif %}
 
-  <form method="get" action="{% url 'ecommerce:Ecommerce_index' %}">
-    <input type="text" name="q" placeholder="Search products...">
-    <button type="submit">Search</button>
-  </form>
+<div class="store-container">
+    <h1>Store</h1>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'ecommerce:cart' %}" class="cart-link">Your shopping cart</a>
+    {% endif %}
 
-  {% if products %}
-    <ul>
-      {% for product in products %}
-        <li>
-          <a href="{% url 'ecommerce:product_detail' product.id %}">
-            {{ product.name }}
-          </a>
-          <br>
-          Price: {{ product.price|intcomma }}
-          <br>
-          {% if request.user.is_authenticated %}
-            <a href="{% url 'ecommerce:add_to_cart' product.id %}">Add to cart</a>
-          {% endif %}
-        </li>
-        <br>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No products found.</p>
-  {% endif %}
+    <form method="get" action="{% url 'ecommerce:Ecommerce_index' %}">
+        <input type="text" name="q" placeholder="Search products...">
+        <button type="submit">Search</button>
+    </form>
 
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <a href="{% url 'ecommerce:product_detail' product.id %}">
+                        {{ product.name }}
+                    </a>
+                    <br>
+                    Price: {{ product.price|intcomma }}
+                    <br>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'ecommerce:add_to_cart' product.id %}">Add to cart</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
 </div>
 {% endblock content %}
