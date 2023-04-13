@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 
-def index(request):
+def Cindex(request):
     return render(request, "chat/index.html")
 
 
