@@ -2,38 +2,90 @@
 {% load static %}
 {% block content %}
 <style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+  body{
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-<div>
-<!-- display episode cover -->
-<div class="episode-cover">
-    <img src="{{ episode.cover.url }}" alt="{{ episode.title }}"width="200" height="200">
-</div>
+  .episode-cover {
+    margin-bottom: 20px;
+  }
 
-<!-- display episode title -->
-<h1 class="episode-title">{{ episode.title }}</h1>
-<a href="{% url 'MyApp:video_index' %}">back</a>
-<!-- display episode description -->
-<div class="episode-description">
+  .episode-cover img {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  }
+
+  .episode-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .hod {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    margin-top: 50px;
+    padding: 20px;
+    width: 800px;
+  }
+
+  .episode-videos {
+    margin-top: 20px;
+  }
+
+  .episode-videos h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .episode-videos a {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+  }
+
+  .episode-videos a:hover {
+    background-color: #3e8e41;
+  }
+</style>
+
+<div class="hod">
+  <!-- display episode cover -->
+  <div class="episode-cover">
+    <img src="{{ episode.cover.url }}" alt="{{ episode.title }}" width="200" height="200">
+  </div>
+
+  <!-- display episode title -->
+  <h1 class="episode-title">{{ episode.title }}</h1>
+  <a href="{% url 'MyApp:video_index' %}">back</a>
+
+  <!-- display episode description -->
+  <div class="episode-description">
     {{ episode.description }}
-</div>
+  </div>
 
-<!-- display the videos under episode -->
-<div class="episode-videos">
+  <!-- display the videos under episode -->
+  <div class="episode-videos">
     {% for video in videos %}
-        <h4>{{ video.title }}
-            <a href="{% url 'MyApp:video_detail' video.id %}">watch</a>
-        </h4>
+      <h4>{{ video.title }}
+        <a href="{% url 'MyApp:video_detail' video.id %}">watch</a>
+      </h4>
     {% endfor %}
-</div>
-{% if user.is_authenticated %}
-<!-- upload video-->
-<a href="{% url 'MyApp:upload_video' episode.id %}">upload video</a>
-{% endif %}
+  </div>
+
+  {% if user.is_authenticated %}
+    <!-- upload video-->
+    <a href="{% url 'MyApp:upload_video' episode.id %}">upload video</a>
+  {% endif %}
 </div>
 {% endblock content %}

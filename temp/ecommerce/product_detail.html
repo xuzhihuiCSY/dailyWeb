@@ -6,15 +6,22 @@
 <link rel="stylesheet" href="{% static 'ecommerce_styles.css' %}">
 
 <div class="product-detail-container">
-    <h2>{{ product.name }}</h2>
-    <a href="{% url 'ecommerce:Ecommerce_index' %}" class="store-link">Back to store</a>
-    <p>{{ product.description }}</p>
-    <p>{{ product.price }}</p>
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-
-    <form action="{% url 'ecommerce:add_to_cart' product.id %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Add to Cart" class="submit-btn">
-    </form>
+    <div class="product-detail-header">
+        <h2>{{ product.name }}</h2>
+        <a href="{% url 'ecommerce:Ecommerce_index' %}" class="store-link">Back to store</a>
+    </div>
+    <div class="product-detail-main">
+        <div class="product-detail-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-detail-info">
+            <p class="product-detail-description">{{ product.description }}</p>
+            <p class="product-detail-price">Price: {{ product.price|intcomma }}</p>
+            <form action="{% url 'ecommerce:add_to_cart' product.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Add to Cart" class="submit-btn">
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}

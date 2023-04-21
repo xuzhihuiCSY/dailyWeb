@@ -8,18 +8,76 @@
     justify-content: center;
     min-height: 600px;
   }
+
+  video {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    margin-top: 20px;
+  }
+
+  .same-episode-videos {
+    margin-top: 20px;
+  }
+
+  .same-episode-videos h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .video {
+    margin-bottom: 5px;
+  }
+
+  .video h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .comments {
+    margin-top: 20px;
+  }
+
+  .comment {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .comment p {
+    margin-bottom: 5px;
+  }
+
+  form {
+    margin-top: 20px;
+  }
+
+  form input[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  form input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
 </style>
 <div style="padding-top: 80px;">
-<h2>{{ video.title }}</h2>
-<a href="{% url 'MyApp:video_index' %}">back</a>
-<p>Episode Number: {{ video.episode_number }}</p>
+  <h2>{{ video.title }}</h2>
+  <a href="{% url 'MyApp:video_index' %}">back</a>
+  <p>Episode Number: {{ video.episode_number }}</p>
 
-<video width="400" controls>
+  <video width="400" controls>
     <source src="{{ video.file.url }}" type="video/mp4">
     Your browser does not support HTML video.
   </video>
 
-<div class="same-episode-videos">
+  <div class="same-episode-videos">
     <h3>Videos under the same episode:</h3>
     {% for v in videos_in_same_episode %}
       <div class="video">
@@ -28,22 +86,22 @@
     {% endfor %}
   </div>
 
-<h3>Video Comments</h3>
-<div class="comments">
+  <h3>Video Comments</h3>
+  <div class="comments">
     {% for comment in comments %}
-        <div class="comment">
-            <p>{{ comment.comment }}</p>
-            <p>Comment by: {{ comment.user }}</p>
-            <p>=================================================</p>
-        </div>
+      <div class="comment">
+        <p>{{ comment.comment }}</p>
+        <p>Comment by: {{ comment.user }}</p>
+      </div>
     {% endfor %}
-</div>
+  </div>
 
-<h3>Add a Comment</h3>
-<form action="{% url 'MyApp:video_detail' video.id %}" method="post">
+  <h3>Add a Comment</h3>
+  <form action="{% url 'MyApp:video_detail' video.id %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <textarea name="comment" cols="40" rows="5"></textarea>
+    <br>
     <input type="submit" value="Submit">
-</form>
+  </form>
 </div>
 {% endblock content %}

@@ -66,9 +66,7 @@ form {
     margin-top: 20px;
   }
 
-  input[type="text"],
-  input[type="file"],
-  textarea {
+.news_input {
     width: 50%;
     padding: 10px;
     font-size: 16px;
@@ -99,7 +97,7 @@ form {
 height: 80px;">
 </div>
 <form method="get">
-    <input type="text" name="query" placeholder="Search news...">
+    <input type="text" name="query" placeholder="Search news..." class="news_input">
     <button type="submit">Search</button>
 </form>
 {% for news, des, img in mylist %}

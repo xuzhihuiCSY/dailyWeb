@@ -1,21 +1,104 @@
 {% extends 'STY.html' %}
 {% load static %}
 {% block content %}
-<style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
 
-<div>
-<h1 style="display:inline;">Video Index</h1>
+<style>
+    .ct {
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: 80px;
+    }
+
+    .title {
+        font-size: 50px;
+        font-weight: 500;
+        color: var(--side-nav);
+    }
+    .slider {
+        width: 100%;
+        cursor: pointer;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    
+    .slide {
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .slide img {
+        width: auto;
+        height: 500px;
+        
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+
+    .listOftype {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        /* make it a card */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        padding: 20px;
+        height: 350px;
+    }
+
+    .typeC {
+        margin: 0 20px;
+        /* card */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        height: 300px;
+        width: 200px;
+        padding: 20px;
+    }
+
+    .typeC li{
+        /* no dot for li */
+        list-style-type: none;
+        cursor: pointer;
+    }
+
+    .searchBar {
+        width: 300px;
+        height: 30px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 0 10px;
+        font-size: 16px;
+    }
+
+    .searchBtn {
+        width: 100px;
+        height: 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ccc;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    </style>
+    
+
+<div class="ct">
+<h1 class="title">Video Index</h1>
 
 <!-- search bar -->
 <form method="get">
-    <input type="text" name="q" placeholder="Search">
-    <button type="submit">Search</button>
+    <input type="text" name="q" placeholder="Search" class="searchBar">
+    <button type="submit" class="searchBtn">Search</button>
 </form> 
 
 <!-- display the newest 5 Episodes -->
@@ -23,49 +106,80 @@
 <ul>
     {% for episode in episodes %}
         {% if forloop.counter <= 5 %}
-            <li><a href="{% url 'MyApp:episode_detail' episode.id %}">{{ episode.title }}</a></li>
-            <li><img src="{{ episode.cover.url }}" alt="{{ episode.title }} cover" width="200" height="200"></li>
+        <div class="slider">
+            <div class="slide" onclick="window.location.href='{% url 'MyApp:episode_detail' episode.id %}'">
+                    <img src="{{ episode.cover.url }}" alt="{{ episode.title }} cover" >
+                </div>
+            </div>
         {% endif %}
     {% endfor %}
 </ul>
 <!-- Anime Episode, only display first 5 -->
-<h3>Anime:</h3>
-<ul>
-    {% for episode in episodes %}
-    {% if episode.category == 'Anime' %}
-        <li>{{ episode.title }}</li>
-    {% endif %}
-    {% endfor %}
-</ul>
-<!-- Movie Episode, only display first 5 -->
-<h3>Movies:</h3>
-<ul>
-    {% for episode in episodes %}
-    {% if episode.category == 'Movies' %}
-        <li>{{ episode.title }}</li>
-    {% endif %}
-    {% endfor %}
-</ul>
-<!-- TV Series Episode, only display first 5 -->
-<h3>TV Series:</h3>
-<ul>
-    {% for episode in episodes %}
-    {% if episode.category == 'TV Series' %}
-        <li>{{ episode.title }}</li>
-    {% endif %}
-    {% endfor %}
-</ul>
-<!-- Documentaries Episode, only display first 5 -->
-<h3>Documentaries:</h3>
-<ul>
-    {% for episode in episodes %}
-    {% if episode.category == 'Documentaries' %}
-        <li>{{ episode.title }}</li>
-    {% endif %}
-    {% endfor %}
-</ul>
+
+<div class="listOftype">
+    <div class="typeC">
+        <h3>Anime</h3>
+        <ul>
+            {% for episode in episodes %}
+            {% if episode.category == 'Anime' %}
+                <li onclick="window.location.href='{% url 'MyApp:episode_detail' episode.id %}'">{{ episode.title }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Movie Episode, only display first 5 -->
+    <div class="typeC">
+        <h3>Movie</h3>
+        <ul>
+            {% for episode in episodes %}
+            {% if episode.category == 'Movies' %}
+                <li onclick="window.location.href='{% url 'MyApp:episode_detail' episode.id %}'">{{ episode.title }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- TV Series Episode, only display first 5 -->
+    <div class="typeC">
+        <h3>TV Series</h3>
+        <ul>
+            {% for episode in episodes %}
+            {% if episode.category == 'TV Series' %}
+                <li onclick="window.location.href='{% url 'MyApp:episode_detail' episode.id %}'" >{{ episode.title }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Documentaries Episode, only display first 5 -->
+    <div class="typeC">
+        <h3>Documentaries</h3>
+        <ul>
+            {% for episode in episodes %}
+            {% if episode.category == 'Documentaries' %}
+                <li onclick="window.location.href='{% url 'MyApp:episode_detail' episode.id %}'">{{ episode.title }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% if user.is_authenticated %}
 <a href="{% url 'MyApp:create_episode' %}">create New episode</a>
 {% endif %}
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let slides = document.querySelectorAll(".slide");
+      let currentIndex = 0;
+      slides[currentIndex].classList.add("active");
+    
+      function nextSlide() {
+        slides[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add("active");
+      }
+    
+      setInterval(nextSlide, 3000); // Change the slide every 3 seconds.
+    });
+    </script>
+    
 {% endblock content %}
