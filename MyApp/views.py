@@ -25,6 +25,8 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from To_Do_List.models import Task
 
+
+
 @user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('MyApp:login'))
 def more_list(request):
     if not request.user.is_authenticated:
