@@ -42,6 +42,7 @@
     text-align: center;
     background-color: var(--text-color);
     cursor: pointer;
+    height: 150px;
   }
 
   ::-webkit-scrollbar { 

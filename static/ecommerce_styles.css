@@ -1,44 +1,39 @@
-/* Add these styles to your existing CSS file or create a new one */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
 .store-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 40px auto;
     background-color: white;
     border-radius: 10px;
-    padding: 20px;
+    padding: 40px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
 }
 
 h1 {
-    display: inline-block;
+    font-size: 2.2rem;
     margin-bottom: 20px;
     color: #4c4c4c;
 }
 
 .cart-link {
-    display: inline-block;
+    font-size: 1.1rem;
     margin-left: 20px;
     text-decoration: none;
     color: #007BFF;
 }
 
-.cart-link:hover {
-    text-decoration: underline;
-}
-
 form {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
-input {
+.ecommerce_input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -64,10 +59,24 @@ button:hover {
 ul {
     list-style-type: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
 }
 
-li {
-    margin-bottom: 20px;
+.li-ec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.li-ec:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
 }
 
 a {
@@ -79,21 +88,54 @@ a:hover {
     text-decoration: underline;
 }
 
+img {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.product-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.price {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
 .product-detail-container {
+    max-width: 900px;
+    width: 90%;
+    margin: 40px auto;
     background-color: white;
     border-radius: 10px;
-    padding: 20px;
+    padding: 40px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+}
+
+.product-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 h2 {
     color: #4c4c4c;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .store-link {
-    display: inline-block;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
     text-decoration: none;
     color: #007BFF;
 }
@@ -102,12 +144,28 @@ h2 {
     text-decoration: underline;
 }
 
-img {
-    width: 200px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.product-detail-main {
+    display: flex;
+    gap: 40px;
+}
+
+.product-detail-image {
+    flex: 1;
+}
+
+.product-detail-info {
+    flex: 1;
+}
+
+.product-detail-description {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.product-detail-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .submit-btn {
@@ -119,10 +177,8 @@ img {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 20px;
 }
 
 .submit-btn:hover {
     background-color: #0056b3;
 }
-
